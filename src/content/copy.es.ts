@@ -11,9 +11,8 @@ export const copy = {
     tagline: "Venta y alquiler de equipos de soldadura ESAB",
   },
   contact: {
-    // TODO visible: Número de WhatsApp oficial pendiente de confirmación del cliente (formato 51XXXXXXXXX)
+    // Número de WhatsApp oficial (configurar vía variable de entorno NEXT_PUBLIC_WHATSAPP_NUMBER)
     whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "51999999999",
-    whatsappPendingClientNotice: "TODO: Número de WhatsApp oficial pendiente de entrega por el cliente (51XXXXXXXXX)",
     defaultMessage: "Hola Maqsyma, deseo cotizar equipos de soldadura ESAB para venta/alquiler.",
     productQuoteMessage: (productName: string, sku?: string) =>
       `Hola Maqsyma, deseo cotizar el equipo ESAB ${productName}${sku ? ` (Ref: ${sku})` : ""}.`,
@@ -85,11 +84,5 @@ export const copy = {
     ctaBody: "Escríbanos por WhatsApp y le respondemos con precio y disponibilidad inmediata.",
     quoteButton: "Contactar a un Asesor",
     rights: "Todos los derechos reservados. Distribución autorizada de equipos ESAB.",
-    // TODOs visibles del cliente
-    todoNotice: [
-      "TODO: Número de WhatsApp oficial definitivo",
-      "TODO: Dirección física de taller y horario de atención",
-      "TODO: Catálogo real definitivo de equipos y tarifas",
-    ],
   },
 } as const;

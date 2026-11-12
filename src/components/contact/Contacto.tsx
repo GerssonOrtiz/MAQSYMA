@@ -42,20 +42,7 @@ export const Contacto: React.FC = () => {
           </a>
         </div>
 
-        {/* Pendientes TODOs del cliente expuestos de forma visible */}
-        <div className="mt-12 pt-8 border-t border-[var(--color-grafito-2)] text-left max-w-lg mx-auto bg-[var(--color-carbon)]/60 p-4 rounded-lg border border-dashed border-[var(--color-oro)]/30">
-          <p className="text-[11px] font-mono text-[var(--color-oro-claro)] uppercase tracking-wider mb-2">
-            Información comercial pendiente de confirmación:
-          </p>
-          <ul className="space-y-1 text-xs text-[var(--color-gris)] font-mono">
-            {copy.footer.todoNotice.map((todo, idx) => (
-              <li key={idx} className="flex items-center gap-2">
-                <span className="text-[var(--color-oro)]">▪</span>
-                <span>{todo}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+
       </div>
     </section>
   );
