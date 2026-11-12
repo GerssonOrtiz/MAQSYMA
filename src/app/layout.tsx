@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
-import { Montserrat, Inter } from "next/font/google";
+import { Montserrat, Inter, Syne } from "next/font/google";
 import { copy } from "@/content/copy.es";
 
 const montserrat = Montserrat({
@@ -9,6 +9,13 @@ const montserrat = Montserrat({
   variable: "--font-montserrat",
   display: "swap",
   fallback: ["Arial", "sans-serif"],
+});
+
+const syne = Syne({
+  subsets: ["latin"],
+  weight: ["700", "800"],
+  variable: "--font-syne",
+  display: "swap",
 });
 
 const inter = Inter({
@@ -88,7 +95,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="es" className={`${montserrat.variable} ${inter.variable}`}>
+    <html lang="es" className={`${montserrat.variable} ${inter.variable} ${syne.variable}`}>
       <head>
         <script
           type="application/ld+json"
