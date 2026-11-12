@@ -1,19 +1,61 @@
 "use client";
 
-import React from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { copy } from "@/content/copy.es";
 import { whatsappLink } from "@/lib/whatsapp";
 
 export const Hero: React.FC = () => {
   const whatsappHref = whatsappLink(copy.contact.defaultMessage);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
+  // Intentar reproducir el video manualmente si autoPlay falla (políticas móviles)
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.play().catch(() => {
+      // Silenciar error — el video simplemente no se reproduce en ese contexto
+    });
+  }, []);
 
   return (
     <section
       aria-label="Presentación principal de Maqsyma"
-      className="relative min-h-[90dvh] flex flex-col justify-center max-w-7xl mx-auto px-6 pt-32 pb-16"
+      className="relative min-h-[90dvh] flex flex-col justify-center max-w-7xl mx-auto px-6 pt-32 pb-16 overflow-hidden"
     >
-      {/* Luz ambiental sutil en el fondo */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[var(--color-oro)]/5 blur-[120px] pointer-events-none rounded-full" />
+      {/* ── Video de intro como fondo atmosférico ── */}
+      <div
+        className={`absolute inset-0 w-full h-full pointer-events-none transition-opacity duration-1000 ${
+          videoLoaded ? "opacity-100" : "opacity-0"
+        }`}
+        aria-hidden="true"
+      >
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          onCanPlay={() => setVideoLoaded(true)}
+          className="absolute inset-0 w-full h-full object-cover opacity-[0.18]"
+        >
+          <source src="/images/Maqsyma_intro.mp4" type="video/mp4" />
+        </video>
+
+        {/* Overlay: gradiente que oscurece los bordes y protege la legibilidad del texto */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-carbon)]/60 via-[var(--color-carbon)]/30 to-[var(--color-carbon)]" />
+        {/* Viñeta lateral izquierda para enfatizar el texto */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-carbon)]/80 via-transparent to-transparent" />
+      </div>
+
+      {/* Fallback: luz ambiental sutil mientras carga o si no hay video */}
+      <div
+        className={`absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[300px] bg-[var(--color-oro)]/5 blur-[120px] pointer-events-none rounded-full transition-opacity duration-1000 ${
+          videoLoaded ? "opacity-0" : "opacity-100"
+        }`}
+        aria-hidden="true"
+      />
 
       <div className="relative z-10 max-w-4xl space-y-6">
         {/* Distintivo de distribución oficial */}
