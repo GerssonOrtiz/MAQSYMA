@@ -24,7 +24,7 @@ export const scenes: Scene[] = [
       desktop: "/scenes/entrada.webp",
       mobile: "/scenes/entrada-m.webp",
       alt: "Entrada del taller Maqsyma",
-      placeholder: true,
+      placeholder: false,
     },
   },
   {
@@ -37,7 +37,7 @@ export const scenes: Scene[] = [
       desktop: "/scenes/mig-mag.webp",
       mobile: "/scenes/mig-mag-m.webp",
       alt: "Zona de soldadura MIG/MAG",
-      placeholder: true,
+      placeholder: false,
     },
     cta: {
       label: "Cotizar equipos MIG/MAG",
