@@ -4,7 +4,7 @@ import { Logo } from "@/components/brand/Logo";
 import { copy } from "@/content/copy.es";
 
 export const Footer: React.FC = () => {
-  const currentYear = 2026;
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="w-full bg-[var(--color-carbon)] border-t border-[var(--color-grafito-2)] py-12 px-6">

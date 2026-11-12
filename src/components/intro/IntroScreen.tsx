@@ -30,7 +30,11 @@ export const IntroScreen: React.FC = () => {
     if (typeof window === "undefined") return;
 
     const seen = sessionStorage.getItem(SESSION_KEY);
-    if (seen) {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    if (seen || prefersReducedMotion) {
       setVisible(false);
       return;
     }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Equipo, EtiquetaDestacado } from "@/types/equipo";
-import { TarjetaEquipo } from "./TarjetaEquipo";
 import { EstadoVacio } from "./EstadoVacio";
+import { SeccionEquiposClient } from "./SeccionEquiposClient";
 
 interface SeccionEquiposProps {
   id: string;
@@ -50,16 +50,7 @@ export const SeccionEquipos: React.FC<SeccionEquiposProps> = ({
       {equipos.length === 0 ? (
         <EstadoVacio tituloSeccion={titulo} />
       ) : (
-        <ul className="flex gap-5 overflow-x-auto pb-4 pt-1 snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible md:pb-0 scrollbar-none">
-          {equipos.slice(0, 6).map((equipo) => (
-            <li
-              key={equipo.id}
-              className="snap-start shrink-0 w-[78vw] sm:w-[48vw] md:w-auto list-none"
-            >
-              <TarjetaEquipo equipo={equipo} etiqueta={etiqueta} />
-            </li>
-          ))}
-        </ul>
+        <SeccionEquiposClient equipos={equipos} etiqueta={etiqueta} />
       )}
     </section>
   );

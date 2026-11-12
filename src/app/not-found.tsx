@@ -55,7 +55,7 @@ export default function NotFound() {
       </main>
 
       <footer className="max-w-7xl mx-auto w-full text-center text-xs text-[var(--color-gris)] py-4">
-        © 2026 {copy.brand.legalName}. Arequipa, Perú.
+        © {new Date().getFullYear()} {copy.brand.legalName}. Arequipa, Perú.
       </footer>
     </div>
   );

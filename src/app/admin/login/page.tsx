@@ -18,7 +18,8 @@ export default function AdminLoginPage() {
 
     // Autenticación de demostración protegida y lista para Supabase Auth
     if (email === "admin@maqsyma.com" && password === "demo1234") {
-      localStorage.setItem("maqsyma_admin_session", "true");
+      // Reemplazar localStorage por cookie que el middleware puede leer
+      document.cookie = "maqsyma_admin_demo=1; path=/; max-age=86400; SameSite=Lax";
       router.push("/admin/productos");
       return;
     }

@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { copy } from "@/content/copy.es";
 
 interface LogoProps {
   className?: string;
@@ -37,7 +38,7 @@ export const Logo: React.FC<LogoProps> = ({
       {showText && (
         <div className="flex flex-col">
           <span className="font-['Montserrat',sans-serif] text-xs tracking-wide text-[var(--color-gris)]">
-            ESAB Welding Solutions
+            {copy.brand.tagline}
           </span>
         </div>
       )}
