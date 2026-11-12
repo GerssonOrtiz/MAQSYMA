@@ -45,6 +45,8 @@ export async function getSeccion(seccion: SeccionTipo): Promise<Equipo[]> {
         unidadAlquiler: p.unidad_alquiler,
         valoracion: p.valoracion ? { promedio: Number(p.valoracion), resenasCount: p.num_resenas } : undefined,
         imagenUrl: p.imagen_url,
+        promocion: p.especificaciones?.promocion,
+        precioAntesVenta: p.especificaciones?.precioAntesVenta,
         disponibleVenta: p.disponible_venta,
         disponibleAlquiler: p.disponible_alquiler,
         activo: p.activo,

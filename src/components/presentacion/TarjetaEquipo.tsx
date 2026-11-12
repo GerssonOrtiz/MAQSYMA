@@ -50,11 +50,16 @@ export const TarjetaEquipo: React.FC<TarjetaEquipoProps> = ({ equipo, etiqueta }
         )}
 
         {/* 2. Etiqueta única de estado en dorado (esquina superior) */}
-        <div className="absolute top-3 left-3 z-10">
+        <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5">
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[var(--color-carbon)]/90 backdrop-blur-md border border-[var(--color-oro)]/40 text-[11px] font-bold text-[var(--color-oro-claro)] shadow-md">
             <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-oro)]" />
             {getEtiquetaLabel()}
           </span>
+          {equipo.promocion && (
+            <span className="inline-flex items-center px-2 py-0.5 rounded bg-red-600/90 text-[10px] font-extrabold text-white shadow uppercase tracking-wide">
+              {equipo.promocion}
+            </span>
+          )}
         </div>
 
         {/* Distintivo de DEMO si corresponde */}
@@ -102,9 +107,16 @@ export const TarjetaEquipo: React.FC<TarjetaEquipoProps> = ({ equipo, etiqueta }
           {equipo.precioVenta && (
             <div className="flex items-baseline justify-between text-xs">
               <span className="text-[var(--color-gris)]">Venta:</span>
-              <span className="text-sm font-bold text-[var(--color-plata)] tabular-nums">
-                S/ {equipo.precioVenta.toLocaleString("es-PE")}
-              </span>
+              <div className="flex items-baseline gap-2">
+                {equipo.precioAntesVenta && (
+                  <span className="text-xs text-[var(--color-gris)] line-through tabular-nums">
+                    S/ {equipo.precioAntesVenta.toLocaleString("es-PE")}
+                  </span>
+                )}
+                <span className="text-sm font-bold text-[var(--color-plata)] tabular-nums">
+                  S/ {equipo.precioVenta.toLocaleString("es-PE")}
+                </span>
+              </div>
             </div>
           )}
 

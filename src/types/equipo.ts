@@ -29,6 +29,8 @@ export interface Equipo {
     resenasCount: number; // e.g. 18
   };
   imagenUrl?: string;
+  promocion?: string; // Etiqueta o texto de promoción especial
+  precioAntesVenta?: number; // Precio anterior de referencia si está en oferta
   disponibleVenta: boolean;
   disponibleAlquiler: boolean;
   activo: boolean;
