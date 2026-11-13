@@ -96,17 +96,19 @@ export default async function EquipoDetailPage({
 
         {/* Ficha Editorial de Producto */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start mb-20">
-          {/* Bloque Visual Principal */}
-          <div className="lg:col-span-6 rounded-2xl bg-[#0e1017] border border-[#202332] p-8 sm:p-12 flex flex-col items-center justify-center min-h-[440px] relative overflow-hidden shadow-2xl">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[var(--color-oro)]/5 rounded-full blur-3xl pointer-events-none" />
+          {/* Bloque Visual Principal con Spotlight Industrial */}
+          <div className="lg:col-span-6 rounded-2xl bg-gradient-to-b from-[#141824] via-[#0f1118] to-[#090b10] border border-[#272d40] p-8 sm:p-12 flex flex-col items-center justify-center min-h-[460px] relative overflow-hidden shadow-2xl">
+            {/* Halo radial de iluminación central para despegar el equipo de fondo */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.14)_0%,rgba(245,158,11,0.08)_40%,transparent_75%)] pointer-events-none" />
 
             {/* Badges Técnicos Superpuestos */}
-            <div className="absolute top-6 left-6 flex flex-wrap gap-2 z-10">
-              <span className="px-3 py-1 rounded bg-black/60 backdrop-blur-md border border-white/10 text-[10px] font-mono text-[var(--color-oro)] uppercase tracking-wider">
+            <div className="absolute top-6 left-6 flex flex-wrap gap-2.5 z-10">
+              <span className="px-3 py-1.5 rounded-full bg-black/70 backdrop-blur-md border border-amber-500/40 text-[10px] font-mono font-bold text-amber-400 uppercase tracking-wider shadow-lg">
                 {producto.marca} OFICIAL
               </span>
               {producto.disponibleAlquiler && (
-                <span className="px-3 py-1 rounded bg-blue-500/20 backdrop-blur-md border border-blue-500/30 text-[10px] font-mono text-blue-300">
+                <span className="px-3 py-1.5 rounded-full bg-emerald-500/20 backdrop-blur-md border border-emerald-500/40 text-[10px] font-mono font-bold text-emerald-400 flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   DISPONIBLE EN ALQUILER
                 </span>
               )}
@@ -116,10 +118,10 @@ export default async function EquipoDetailPage({
               <img
                 src={producto.imagenUrl}
                 alt={producto.nombre}
-                className="max-h-[380px] max-w-full object-contain filter drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]"
+                className="max-h-[400px] max-w-full object-contain filter drop-shadow-[0_20px_40px_rgba(0,0,0,0.95)] drop-shadow-[0_0_25px_rgba(245,158,11,0.2)] transition-transform duration-300 hover:scale-105 z-10"
               />
             ) : (
-              <div className="py-12 w-full flex flex-col items-center">
+              <div className="py-12 w-full flex flex-col items-center z-10">
                 <EquipoImagePlaceholder
                   nombre={producto.nombre}
                   familia={producto.proceso || "General"}
@@ -250,21 +252,35 @@ export default async function EquipoDetailPage({
                 <Link
                   key={rel.id}
                   href={`/equipos/${rel.slug}`}
-                  className="rounded-xl bg-[#0d0f15] border border-[#1e2230] hover:border-[var(--color-oro)]/50 p-6 flex flex-col justify-between transition-all duration-200 group"
+                  className="rounded-2xl bg-[#0f1118] border border-[#202535] hover:border-amber-500/50 p-6 flex flex-col justify-between transition-all duration-300 group shadow-lg hover:shadow-2xl hover:shadow-black/70 hover:-translate-y-1"
                 >
                   <div>
-                    <div className="flex justify-between items-center text-xs font-mono text-neutral-400 mb-2">
-                      <span className="text-[var(--color-oro)] font-bold">{rel.marca}</span>
-                      <span>{rel.proceso}</span>
+                    <div className="flex justify-between items-center text-xs font-mono mb-3">
+                      <span className="px-2.5 py-1 rounded bg-amber-500/10 border border-amber-500/30 text-[10px] font-bold text-amber-400 uppercase">
+                        {rel.marca}
+                      </span>
+                      <span className="text-neutral-400 text-[10px] bg-white/5 px-2 py-0.5 rounded border border-white/5">{rel.proceso}</span>
                     </div>
-                    <h4 className="font-['Syne',sans-serif] text-lg font-bold text-white group-hover:text-[var(--color-oro-claro)] transition-colors mb-2">
+
+                    {rel.imagenUrl && (
+                      <div className="relative w-full h-44 my-3 rounded-xl bg-gradient-to-b from-[#161a25] to-[#0a0c10] border border-[#232737] group-hover:border-amber-500/30 flex items-center justify-center p-3 overflow-hidden">
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_0%,transparent_70%)] pointer-events-none" />
+                        <img
+                          src={rel.imagenUrl}
+                          alt={rel.nombre}
+                          className="max-h-full max-w-full object-contain filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.9)] group-hover:scale-105 transition-transform duration-300 z-10"
+                        />
+                      </div>
+                    )}
+
+                    <h4 className="font-['Syne',sans-serif] text-lg font-bold text-white group-hover:text-amber-400 transition-colors mb-2">
                       {rel.nombre}
                     </h4>
-                    <p className="text-xs text-neutral-400 line-clamp-2 font-light">
+                    <p className="text-xs text-neutral-300 line-clamp-2 font-normal leading-relaxed">
                       {rel.descripcionCorta}
                     </p>
                   </div>
-                  <div className="pt-4 mt-4 border-t border-white/5 text-xs font-mono text-[var(--color-oro)] flex justify-between items-center">
+                  <div className="pt-4 mt-4 border-t border-white/10 text-xs font-mono font-bold text-amber-400 flex justify-between items-center group-hover:text-amber-300">
                     <span>Ver ficha técnica</span>
                     <span>→</span>
                   </div>

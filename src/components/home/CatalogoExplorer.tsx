@@ -155,92 +155,96 @@ export const CatalogoExplorer: React.FC<CatalogoExplorerProps> = ({ productos })
 
         {/* Grid de Productos con Fotografía Oficial Integrada */}
         {productosFiltrados.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
             {productosFiltrados.map((equipo) => {
               const quoteHref = whatsappProductLink(equipo.nombre, equipo.modelo);
               return (
                 <div
                   key={equipo.id}
-                  className="rounded-xl bg-[#0e1017] border border-[#1d202d] hover:border-[var(--color-oro)]/50 transition-all duration-300 flex flex-col justify-between p-6 group hover:shadow-2xl hover:shadow-black/60"
+                  className="rounded-2xl bg-gradient-to-b from-[#11131b] to-[#0c0d13] border border-[#202534] hover:border-amber-500/60 transition-all duration-300 flex flex-col justify-between p-6 group hover:shadow-2xl hover:shadow-black/80 hover:-translate-y-1 relative"
                 >
                   <div>
                     {/* Header de la tarjeta */}
-                    <div className="flex items-center justify-between mb-3">
-                      <span className="text-xs font-mono font-bold text-[var(--color-oro)] tracking-wider">
+                    <div className="flex items-center justify-between mb-3.5">
+                      <span className="px-2.5 py-1 rounded bg-black/60 border border-amber-500/30 text-[11px] font-mono font-black text-amber-400 tracking-wider">
                         {equipo.marca}
                       </span>
-                      <div className="flex gap-2">
+                      <div className="flex items-center gap-2">
                         {equipo.disponibleAlquiler && (
-                          <span className="px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-[10px] font-mono text-blue-300">
+                          <span className="px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-[10px] font-mono font-bold text-emerald-400 flex items-center gap-1">
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                             ALQUILER
                           </span>
                         )}
-                        <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-neutral-400">
+                        <span className="px-2.5 py-1 rounded bg-[#161822] border border-white/10 text-[10px] font-mono font-medium text-neutral-300">
                           {equipo.proceso}
                         </span>
                       </div>
                     </div>
 
-                    {/* Contenedor de Fotografía Real del Equipo */}
-                    <div className="relative w-full h-48 my-3 rounded-lg bg-[#0a0c10] border border-white/5 flex items-center justify-center p-3 overflow-hidden group-hover:border-[var(--color-oro)]/30 transition-colors">
+                    {/* Contenedor de Fotografía Real del Equipo con Halo Industrial */}
+                    <div className="relative w-full h-56 my-3 rounded-xl bg-gradient-to-b from-[#171b26] to-[#0a0c10] border border-[#242938] group-hover:border-amber-500/40 flex items-center justify-center p-4 overflow-hidden transition-colors shadow-inner">
+                      {/* Halo radial centrado para recortar la maquinaria de color amarillo y chasis negro */}
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.09)_0%,rgba(245,158,11,0.04)_45%,transparent_75%)] pointer-events-none" />
+
                       {equipo.imagenUrl ? (
                         <Image
                           src={equipo.imagenUrl}
                           alt={equipo.nombre}
                           fill
-                          className="object-contain p-2 filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.85)] group-hover:scale-105 transition-transform duration-300"
+                          className="object-contain p-3 filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.92)] drop-shadow-[0_0_15px_rgba(245,158,11,0.15)] group-hover:scale-108 transition-transform duration-300 z-10"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
                       ) : (
-                        <div className="flex flex-col items-center justify-center text-neutral-400 text-xs font-mono">
-                          <span className="text-2xl mb-1">⚡</span>
-                          <span>Ficha Técnica Oficial</span>
+                        <div className="flex flex-col items-center justify-center text-amber-400 text-xs font-mono z-10">
+                          <span className="text-3xl mb-1">⚡</span>
+                          <span className="text-neutral-300 font-semibold">Ficha Técnica Oficial</span>
                         </div>
                       )}
                     </div>
 
                     {/* Titular */}
                     <Link href={`/equipos/${equipo.slug}`}>
-                      <h3 className="font-['Syne',sans-serif] text-xl font-bold text-white group-hover:text-[var(--color-oro-claro)] transition-colors mb-2">
+                      <h3 className="font-['Syne',sans-serif] text-xl font-bold text-white group-hover:text-amber-400 transition-colors mb-2 leading-snug">
                         {equipo.nombre}
                       </h3>
                     </Link>
 
                     {/* Descripción corta */}
-                    <p className="text-xs text-neutral-400 font-light leading-relaxed line-clamp-2 mb-4">
+                    <p className="text-xs text-neutral-300 font-normal leading-relaxed line-clamp-2 mb-4">
                       {equipo.descripcionCorta}
                     </p>
 
-                    {/* Especificaciones clave normalizadas */}
+                    {/* Especificaciones clave normalizadas con alto contraste */}
                     {equipo.especificaciones && (
-                      <div className="space-y-1.5 py-3 border-y border-white/5 text-[11px] font-mono text-neutral-400 mb-6 bg-black/20 px-3 rounded">
+                      <div className="space-y-2 py-3 border-y border-[#1e2332] text-[11px] font-mono text-neutral-300 mb-6 bg-[#090b0f]/80 px-3.5 rounded-lg border border-white/5">
                         {equipo.especificaciones.amperajeMax && (
-                          <div className="flex justify-between">
-                            <span className="text-neutral-400">Amperaje Máx:</span>
-                            <span className="text-neutral-200 font-bold">{equipo.especificaciones.amperajeMax}</span>
+                          <div className="flex justify-between items-center">
+                            <span className="text-neutral-400 uppercase text-[10px]">Amperaje Máx:</span>
+                            <span className="text-amber-400 font-bold">{equipo.especificaciones.amperajeMax}</span>
                           </div>
                         )}
                         {equipo.especificaciones.voltajeEntrada && (
-                          <div className="flex justify-between">
-                            <span className="text-neutral-400">Voltaje:</span>
-                            <span className="text-neutral-200">{equipo.especificaciones.voltajeEntrada}</span>
+                          <div className="flex justify-between items-center">
+                            <span className="text-neutral-400 uppercase text-[10px]">Voltaje:</span>
+                            <span className="text-white font-medium">{equipo.especificaciones.voltajeEntrada}</span>
                           </div>
                         )}
                         {equipo.especificaciones.cicloTrabajo && (
-                          <div className="flex justify-between">
-                            <span className="text-neutral-400">Ciclo:</span>
-                            <span className="text-neutral-200">{equipo.especificaciones.cicloTrabajo}</span>
+                          <div className="flex justify-between items-center">
+                            <span className="text-neutral-400 uppercase text-[10px]">Ciclo Trabajo:</span>
+                            <span className="text-white font-medium">{equipo.especificaciones.cicloTrabajo}</span>
                           </div>
                         )}
                       </div>
                     )}
                   </div>
 
-                  {/* Acciones */}
-                  <div className="pt-4 border-t border-[#1a1d28] flex items-center justify-between gap-3">
+                  {/* Acciones y Conversión Directa */}
+                  <div className="pt-4 border-t border-[#1e2332] flex items-center justify-between gap-3">
                     <Link
                       href={`/equipos/${equipo.slug}`}
-                      className="text-xs font-mono text-neutral-400 hover:text-white transition-colors"
+                      className="text-xs font-mono font-semibold text-neutral-400 hover:text-white transition-colors"
                     >
                       Ficha Técnica →
                     </Link>
@@ -249,9 +253,9 @@ export const CatalogoExplorer: React.FC<CatalogoExplorerProps> = ({ productos })
                       href={quoteHref}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 rounded bg-[var(--color-oro)]/10 hover:bg-[var(--color-oro)] text-[var(--color-oro)] hover:text-[var(--color-carbon)] border border-[var(--color-oro)]/30 text-xs font-mono uppercase font-bold transition-all duration-200"
+                      className="px-4 py-2.5 rounded-lg bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black text-xs font-mono uppercase font-black tracking-wider transition-all duration-200 shadow-md hover:shadow-[0_0_20px_rgba(245,158,11,0.4)] active:scale-95"
                     >
-                      CONSULTAR EQUIPO
+                      COTIZAR AHORA
                     </a>
                   </div>
                 </div>
