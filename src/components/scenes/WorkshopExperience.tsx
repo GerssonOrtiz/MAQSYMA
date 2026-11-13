@@ -2,11 +2,14 @@
 
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { scenes } from "@/config/scenes";
+import { catalogoProductos } from "@/data/catalogoOficial";
 import { useSceneProgress } from "@/lib/scroll/useSceneProgress";
 import { applyScenes } from "@/lib/scroll/applyScenes";
 import { ScenePlaceholder } from "./ScenePlaceholder";
 import { copy } from "@/content/copy.es";
+import { whatsappProductLink } from "@/lib/whatsapp";
 
 export const WorkshopExperience: React.FC = () => {
   const containerRef = useRef<HTMLElement | null>(null);
@@ -17,7 +20,6 @@ export const WorkshopExperience: React.FC = () => {
   const [isJsReady, setIsJsReady] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
-  // Inicialización de entorno del cliente
   useEffect(() => {
     setIsJsReady(true);
     const checkMobile = () => {
@@ -28,7 +30,6 @@ export const WorkshopExperience: React.FC = () => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  // Callback ultra-optimizado que opera directo en el DOM (sin disparar re-renders de React)
   const handleProgress = useCallback(
     (p: number) => {
       if (!layersRef.current || !textsRef.current || !indicatorsRef.current) return;
@@ -43,13 +44,11 @@ export const WorkshopExperience: React.FC = () => {
     [isMobile]
   );
 
-  // Motor de scroll suave
   useSceneProgress(containerRef, {
     onUpdate: handleProgress,
-    ease: isMobile ? 0.12 : 0.09,
+    ease: isMobile ? 0.12 : 0.08,
   });
 
-  // Salto accesible al pulsar los puntos de navegación
   const handleJumpToScene = (index: number) => {
     if (!containerRef.current) return;
     const n = scenes.length;
@@ -67,24 +66,23 @@ export const WorkshopExperience: React.FC = () => {
 
   return (
     <section
-      id="taller"
+      id="escenas"
       ref={containerRef}
-      aria-label="Recorrido técnico por el taller Maqsyma"
+      aria-label="Recorrido técnico y equipos por proceso industrial"
       className={`relative w-full ${isJsReady ? "js-ready" : "no-js-fallback"}`}
       style={{
-        // Altura continua calculada según la cantidad de escenas
-        height: isJsReady ? `calc(${n} * 100vh)` : "auto",
+        height: isJsReady ? `calc(${n} * 125vh)` : "auto",
       }}
     >
-      {/* Contenedor Sticky para experiencia interactiva */}
+      {/* Contenedor Sticky para experiencia cinematográfica diagonal */}
       <div
         className={`w-full overflow-hidden ${
           isJsReady
             ? "sticky top-0 h-[100dvh]"
-            : "relative h-auto py-12 flex flex-col gap-16"
+            : "relative h-auto py-16 flex flex-col gap-20"
         }`}
       >
-        {/* Capas de imagen / background placeholders */}
+        {/* Capas de imagen / background cinematográfico */}
         <div
           ref={layersRef}
           aria-hidden="true"
@@ -108,33 +106,27 @@ export const WorkshopExperience: React.FC = () => {
                     alt={scene.image.alt}
                     fill
                     priority={idx === 0}
-                    className="object-cover object-center"
+                    className="object-cover object-center filter brightness-[0.65] contrast-[1.1]"
                     sizes="100vw"
                   />
-                  {/* Overlay multinivel de alto contraste para máxima legibilidad tipográfica */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-carbon)] via-[var(--color-carbon)]/70 to-[var(--color-carbon)]/85" />
-                  <div className="absolute inset-0 bg-black/35" />
-                  {/* Textura sutil técnica sobrepuesta */}
-                  <div
-                    className="absolute inset-0 opacity-[0.05] pointer-events-none"
-                    style={{
-                      backgroundImage: `radial-gradient(var(--color-plata) 1px, transparent 1px)`,
-                      backgroundSize: "28px 28px",
-                    }}
-                  />
+                  {/* Overlay gradiente oscuro de alto contraste */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#090A0D] via-[#090A0D]/70 to-[#090A0D]/80" />
+                  <div className="absolute inset-0 bg-black/40" />
+                  {/* Resplandor lateral ámbar de soldadura */}
+                  <div className="absolute top-1/4 right-1/4 w-[480px] h-[480px] bg-[var(--color-oro)]/8 blur-[160px] pointer-events-none rounded-full" />
                 </div>
               )}
             </div>
           ))}
         </div>
 
-        {/* Capas de texto y llamadas a cotización */}
+        {/* Capas interactivas: Equipos reales integrados por cada proceso industrial */}
         <div
           ref={textsRef}
           className={
             isJsReady
-              ? "absolute inset-0 z-10 pointer-events-none flex items-center justify-center"
-              : "relative z-10 max-w-5xl mx-auto px-6 space-y-16"
+              ? "absolute inset-0 z-10 pointer-events-none flex items-center justify-center px-4 sm:px-6"
+              : "relative z-10 max-w-7xl mx-auto px-6 space-y-24"
           }
         >
           {scenes.map((scene, idx) => {
@@ -142,100 +134,158 @@ export const WorkshopExperience: React.FC = () => {
               scene.cta?.message || copy.contact.defaultMessage
             )}`;
 
+            // Obtener los productos reales correspondientes a esta escena
+            const sceneProducts = scene.featuredSlugs
+              .map((slug) => catalogoProductos.find((p) => p.slug === slug))
+              .filter(Boolean);
+
             return (
               <div
                 key={scene.id}
                 className={`${
                   isJsReady
-                    ? "absolute max-w-3xl w-full px-6 text-center will-change-transform will-change-opacity pointer-events-auto"
-                    : "relative p-8 rounded-2xl bg-[var(--color-grafito)]/90 border border-[var(--color-grafito-2)]"
+                    ? "absolute max-w-6xl w-full will-change-transform will-change-opacity pointer-events-auto"
+                    : "relative p-8 rounded-2xl bg-[#12141A] border border-[#1D212B]"
                 }`}
                 style={{
                   opacity: isJsReady ? (idx === 0 ? 1 : 0) : 1,
                   visibility: isJsReady ? (idx === 0 ? "visible" : "hidden") : "visible",
                 }}
               >
-                {/* Tarjeta con Glassmorphism oscuro técnico para contraste impecable */}
-                <div className="p-6 sm:p-10 rounded-2xl bg-[var(--color-carbon)]/85 sm:bg-[var(--color-carbon)]/75 backdrop-blur-md border border-[var(--color-grafito-2)]/90 shadow-2xl">
-                  {/* Píldora de estado con credibilidad técnica / ESAB */}
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[var(--color-grafito)]/90 border border-[var(--color-grafito-2)] text-xs text-[var(--color-oro-claro)] uppercase tracking-wider mb-4 shadow-sm">
-                    <span className="w-2 h-2 rounded-full bg-[var(--color-oro)] animate-pulse" />
-                    <span className="font-semibold">{scene.label}</span>
-                    <span className="opacity-40">|</span>
-                    <span className="font-mono text-[11px] text-[var(--color-gris)]">{scene.process}</span>
-                    <span className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded bg-[var(--color-oro)]/15 text-[10px] font-bold text-[var(--color-oro)] ml-1 border border-[var(--color-oro)]/30">
-                      ESAB OFICIAL
-                    </span>
+                {/* Panel Unificado: Cabecera Cinemática + Equipos del Proceso */}
+                <div className="p-6 sm:p-10 rounded-2xl bg-[#0E1015]/90 backdrop-blur-xl border border-[#1F2430] shadow-2xl space-y-8">
+                  {/* Cabecera de la escena */}
+                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/5 pb-6">
+                    <div>
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#171A22] border border-[#262C3A] text-xs font-mono text-[var(--color-oro-claro)] uppercase tracking-wider mb-2">
+                        <span className="w-2 h-2 rounded-full bg-[var(--color-oro)] animate-ping" />
+                        <span>{scene.label}</span>
+                        <span className="text-neutral-500">·</span>
+                        <span className="text-neutral-300 font-bold">{scene.process}</span>
+                      </div>
+                      <h2 className="font-['Syne',sans-serif] text-3xl sm:text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
+                        {scene.title}
+                      </h2>
+                    </div>
+
+                    <p className="text-xs sm:text-sm text-neutral-400 max-w-md font-light leading-relaxed">
+                      {scene.lead}
+                    </p>
                   </div>
 
-                  {/* Titular */}
-                  <h2 className="font-['Montserrat',sans-serif] text-3xl sm:text-5xl font-extrabold tracking-tight text-[var(--color-plata)] leading-tight mb-4 drop-shadow-lg">
-                    {scene.title}
-                  </h2>
+                  {/* Grid de Equipos del Proceso (Fotos Oficiales de public/equipos) */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                    {sceneProducts.map((equipo) => {
+                      if (!equipo) return null;
+                      const prodQuoteUrl = whatsappProductLink(equipo.nombre, equipo.modelo);
 
-                  {/* Descripción técnica */}
-                  <p className="text-base sm:text-lg text-[var(--color-gris-claro,#d1d5db)] max-w-xl mx-auto leading-relaxed mb-6 font-normal">
-                    {scene.text}
-                  </p>
+                      return (
+                        <div
+                          key={equipo.id}
+                          className="rounded-xl bg-[#13161F] border border-[#202533] hover:border-[var(--color-oro)]/50 p-5 flex flex-col justify-between transition-all duration-300 group shadow-lg"
+                        >
+                          <div>
+                            {/* Header del producto */}
+                            <div className="flex items-center justify-between text-xs font-mono mb-2">
+                              <span className="text-[var(--color-oro)] font-bold">{equipo.marca}</span>
+                              <span className="px-2 py-0.5 rounded bg-white/5 text-[10px] text-neutral-400">
+                                {equipo.proceso}
+                              </span>
+                            </div>
 
-                  {/* Badge de garantía de servicio rápido en Arequipa */}
-                  <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-[var(--color-gris)] mb-6 font-mono">
-                    <span className="inline-flex items-center gap-1.5">
-                      <svg className="w-3.5 h-3.5 text-[var(--color-oro)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                      </svg>
-                      Disponibilidad Arequipa
-                    </span>
-                    <span>•</span>
-                    <span className="inline-flex items-center gap-1.5">
-                      <svg className="w-3.5 h-3.5 text-[var(--color-oro)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                      </svg>
-                      Soporte y Garantía
-                    </span>
+                            {/* Fotografía Oficial del Equipo */}
+                            <div className="relative w-full h-36 my-2 rounded-lg bg-[#090A0D] border border-white/5 flex items-center justify-center p-2 overflow-hidden">
+                              {equipo.imagenUrl ? (
+                                <Image
+                                  src={equipo.imagenUrl}
+                                  alt={equipo.nombre}
+                                  fill
+                                  className="object-contain p-2 filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.9)] group-hover:scale-105 transition-transform duration-300"
+                                  sizes="(max-width: 768px) 100vw, 300px"
+                                />
+                              ) : (
+                                <div className="text-neutral-500 text-xs font-mono text-center">
+                                  <span className="text-xl block mb-1">⚡</span>
+                                  <span>Ficha Oficial</span>
+                                </div>
+                              )}
+                            </div>
+
+                            {/* Título y especificación corta */}
+                            <Link href={`/equipos/${equipo.slug}`}>
+                              <h3 className="font-['Syne',sans-serif] text-base sm:text-lg font-bold text-white group-hover:text-[var(--color-oro-claro)] transition-colors line-clamp-1 mb-1">
+                                {equipo.nombre}
+                              </h3>
+                            </Link>
+
+                            <p className="text-[11px] text-neutral-400 font-light line-clamp-2 leading-relaxed mb-4">
+                              {equipo.descripcionCorta}
+                            </p>
+
+                            {/* Especificación técnica clave */}
+                            {equipo.especificaciones && (
+                              <div className="text-[10px] font-mono text-neutral-400 border-t border-white/5 pt-2 flex justify-between">
+                                <span>Capacidad:</span>
+                                <span className="text-neutral-200 font-semibold">
+                                  {equipo.especificaciones.amperajeMax || equipo.especificaciones.rodillos || "Industrial"}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Acciones */}
+                          <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between gap-2">
+                            <Link
+                              href={`/equipos/${equipo.slug}`}
+                              className="text-[11px] font-mono text-neutral-400 hover:text-white transition-colors"
+                            >
+                              Ficha →
+                            </Link>
+                            <a
+                              href={prodQuoteUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-3 py-1.5 rounded bg-[var(--color-oro)]/15 hover:bg-[var(--color-oro)] text-[var(--color-oro)] hover:text-[#090A0D] border border-[var(--color-oro)]/30 text-[10px] font-mono font-bold uppercase transition-all"
+                            >
+                              Consultar
+                            </a>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
 
-                  {/* Botón CTA contextual por escena con WhatsApp */}
-                  {scene.cta ? (
-                    <div className="pt-1">
-                      <a
-                        href={whatsappUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2.5 rounded-lg bg-[var(--color-oro)] px-6 py-3 text-sm font-bold text-[var(--color-carbon)] transition-all duration-200 hover:bg-[var(--color-oro-claro)] hover:shadow-[0_0_24px_rgba(201,162,74,0.45)] hover:-translate-y-0.5 active:translate-y-0 active:scale-98"
-                      >
-                        <span>{scene.cta.label}</span>
-                        <span className="transition-transform group-hover:translate-x-1">→</span>
-                      </a>
-                    </div>
-                  ) : (
-                    <div className="pt-1">
-                      <a
-                        href={`https://wa.me/${copy.contact.whatsappNumber}?text=${encodeURIComponent(copy.contact.defaultMessage)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-lg bg-[var(--color-grafito-2)] hover:bg-[var(--color-grafito)] border border-[var(--color-oro)]/40 px-6 py-3 text-sm font-semibold text-[var(--color-plata)] transition-all duration-200"
-                      >
-                        <span>Contactar Asesor Técnico</span>
-                        <span>→</span>
-                      </a>
-                    </div>
-                  )}
+                  {/* Barra de acción inferior de la escena */}
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                    <span className="text-xs font-mono text-neutral-500">
+                      Disponibilidad y demostración técnica en Arequipa
+                    </span>
+
+                    <a
+                      href={whatsappUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#090A0D] transition-all hover:brightness-110 active:scale-95 shadow-lg shadow-[var(--color-oro)]/20"
+                    >
+                      <span>{scene.cta.label}</span>
+                      <span>→</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
 
-        {/* Indicador de progreso lateral / inferior interactivo y accesible con etiquetas */}
+        {/* Indicadores de navegación lateral interactivos */}
         {isJsReady && (
           <aside
-            aria-label="Navegación del taller"
-            className="absolute z-20 bottom-6 sm:bottom-auto sm:right-6 sm:top-1/2 sm:-translate-y-1/2 flex sm:flex-col items-center justify-center w-full sm:w-auto pointer-events-auto px-4"
+            aria-label="Navegación entre procesos"
+            className="absolute z-20 bottom-4 sm:bottom-auto sm:right-6 sm:top-1/2 sm:-translate-y-1/2 flex sm:flex-col items-center justify-center w-full sm:w-auto pointer-events-auto px-4"
           >
             <div
               ref={indicatorsRef}
-              className="flex sm:flex-col items-center gap-3 p-2.5 rounded-2xl sm:rounded-full bg-[var(--color-carbon)]/85 backdrop-blur-md border border-[var(--color-grafito-2)] shadow-2xl"
+              className="flex sm:flex-col items-center gap-3 p-2.5 rounded-full bg-[#090A0D]/90 backdrop-blur-md border border-[#1D212B] shadow-2xl"
             >
               {scenes.map((scene, i) => (
                 <button
@@ -243,13 +293,11 @@ export const WorkshopExperience: React.FC = () => {
                   type="button"
                   onClick={() => handleJumpToScene(i)}
                   aria-label={`Saltar a escena ${i + 1}: ${scene.label}`}
-                  title={`${i + 1}. ${scene.label} (${scene.process})`}
-                  className="group relative flex items-center justify-center p-1 focus:outline-none focus:ring-2 focus:ring-[var(--color-oro)] rounded-full transition-transform"
+                  title={`${i + 1}. ${scene.label}`}
+                  className="group relative flex items-center justify-center p-1 focus:outline-none focus:ring-1 focus:ring-[var(--color-oro)] rounded-full transition-transform"
                 >
-                  <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-grafito-2)] transition-all duration-300 block" />
-
-                  {/* Tooltip lateral en hover para pantallas de escritorio */}
-                  <span className="hidden sm:block absolute right-full mr-3 px-2.5 py-1 text-xs font-medium text-[var(--color-plata)] bg-[var(--color-carbon)] border border-[var(--color-grafito-2)] rounded shadow-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#202533] transition-all duration-300 block" />
+                  <span className="hidden sm:block absolute right-full mr-3 px-2.5 py-1 text-xs font-mono text-neutral-300 bg-[#090A0D] border border-[#1D212B] rounded shadow-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity">
                     {i + 1}. {scene.label}
                   </span>
                 </button>

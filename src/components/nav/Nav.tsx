@@ -36,14 +36,12 @@ export const Nav: React.FC = () => {
     };
   }, [mobileMenuOpen]);
 
-  // Estructura oficial requerida por nuevo_diseño.md:
-  // PRODUCTOS, CATEGORÍAS, MARCAS, VENTA Y ALQUILER, CONTACTO
   const navLinks = [
-    { href: "/#destacados", label: "DESTACADOS" },
-    { href: "/#categorias", label: "CATEGORÍAS" },
-    { href: "/#productos", label: "PRODUCTOS" },
+    { href: "/#escenas", label: "PROCESOS Y EQUIPOS" },
+    { href: "/#categorias", label: "LÍNEAS" },
     { href: "/#modalidades", label: "VENTA Y ALQUILER" },
-    { href: "/#marcas", label: "MARCAS" },
+    { href: "/#marcas", label: "ESAB" },
+    { href: "/#productos", label: "CATÁLOGO COMPLETO" },
     { href: "/#contacto", label: "CONTACTO" },
   ];
 
@@ -54,12 +52,11 @@ export const Nav: React.FC = () => {
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-[#090a0d]/95 backdrop-blur-md border-b border-[#1f222d] shadow-2xl py-3"
-            : "bg-gradient-to-b from-[#090a0d]/90 via-[#090a0d]/50 to-transparent py-5"
+            ? "bg-[#090A0D]/95 backdrop-blur-md border-b border-[#1D212B] shadow-2xl py-3"
+            : "bg-gradient-to-b from-[#090A0D]/90 via-[#090A0D]/50 to-transparent py-5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          {/* Logo oficial MAQSYMA */}
           <Link
             href="/"
             className="focus:outline-none focus:ring-1 focus:ring-[var(--color-oro)] rounded flex items-center"
@@ -68,7 +65,6 @@ export const Nav: React.FC = () => {
             <Logo showText={false} />
           </Link>
 
-          {/* Menú Desktop con tipografía técnica y espaciado editorial */}
           <nav className="hidden lg:flex items-center gap-7 text-[12px] font-mono tracking-wider">
             {navLinks.map((link) => (
               <a
@@ -82,7 +78,6 @@ export const Nav: React.FC = () => {
             ))}
           </nav>
 
-          {/* CTAs Funcionales */}
           <div className="hidden md:flex items-center gap-4">
             <Link
               href="/admin/login"
@@ -95,14 +90,13 @@ export const Nav: React.FC = () => {
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--color-carbon)] transition-all duration-200 hover:brightness-110 active:scale-95 shadow-md shadow-[var(--color-oro)]/15"
+              className="inline-flex items-center gap-2 rounded bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#090A0D] transition-all duration-200 hover:brightness-110 active:scale-95 shadow-md shadow-[var(--color-oro)]/20"
             >
               <span>HABLAR CON MAQSYMA</span>
               <span className="text-sm">→</span>
             </a>
           </div>
 
-          {/* Botón Mobile Menu */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="lg:hidden p-2 text-neutral-300 hover:text-white focus:outline-none focus:ring-1 focus:ring-[var(--color-oro)] rounded"
@@ -125,9 +119,8 @@ export const Nav: React.FC = () => {
         </div>
       </header>
 
-      {/* Drawer Móvil Fullscreen */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 bg-[#0a0b0e]/98 backdrop-blur-xl lg:hidden flex flex-col justify-between pt-28 pb-10 px-8 animate-fadeIn">
+        <div className="fixed inset-0 z-40 bg-[#090A0D]/98 backdrop-blur-xl lg:hidden flex flex-col justify-between pt-28 pb-10 px-8 animate-fadeIn">
           <nav className="flex flex-col gap-6">
             <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-oro)] border-b border-white/10 pb-2">
               ÍNDICE DE NAVEGACIÓN
@@ -150,7 +143,7 @@ export const Nav: React.FC = () => {
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 rounded bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] py-3 text-xs font-bold uppercase tracking-wider text-[var(--color-carbon)]"
+              className="w-full flex items-center justify-center gap-2 rounded bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] py-3 text-xs font-bold uppercase tracking-wider text-[#090A0D]"
             >
               <span>HABLAR CON MAQSYMA</span>
               <span>→</span>
