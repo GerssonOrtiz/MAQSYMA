@@ -72,8 +72,8 @@ export const WorkshopExperience: React.FC = () => {
       aria-label="Procesos industriales y equipamiento oficial"
       className={`relative w-full ${isJsReady ? "js-ready" : "no-js-fallback"}`}
       style={{
-        // Altura extendida por escena para garantizar zona de pausa amplia
-        height: isJsReady ? `calc(${n} * 150vh)` : "auto",
+        // Altura extendida por escena (220vh) para garantizar una meseta de permanencia prolongada y cómoda
+        height: isJsReady ? `calc(${n} * 220vh)` : "auto",
       }}
     >
       {/* Contenedor Sticky para experiencia cinematográfica diagonal con pausa */}

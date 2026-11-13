@@ -81,9 +81,12 @@ export const Nav: React.FC = () => {
           <div className="hidden md:flex items-center gap-4">
             <Link
               href="/admin/login"
-              className="text-[11px] font-mono text-neutral-400 hover:text-white px-2.5 py-1.5 rounded border border-white/5 hover:border-white/20 transition-all uppercase tracking-wider"
+              className="inline-flex items-center gap-1.5 text-[11px] font-mono text-neutral-300 hover:text-white px-3 py-1.5 rounded-lg border border-white/10 hover:border-amber-500/40 bg-white/5 hover:bg-white/10 transition-all uppercase tracking-wider"
             >
-              PORTAL ADMIN
+              <svg className="w-3.5 h-3.5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              <span>INICIAR SESIÓN / REGISTRARSE</span>
             </Link>
 
             <a
@@ -148,11 +151,18 @@ export const Nav: React.FC = () => {
               <span>HABLAR CON MAQSYMA</span>
               <span>→</span>
             </a>
-            <div className="flex justify-between items-center text-xs font-mono text-neutral-400 pt-2">
-              <Link href="/admin/login" onClick={() => setMobileMenuOpen(false)} className="hover:text-white">
-                PORTAL PRIVADO
+            <div className="flex justify-between items-center text-xs font-mono text-neutral-300 pt-2">
+              <Link
+                href="/admin/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="inline-flex items-center gap-1.5 hover:text-amber-400 py-1"
+              >
+                <svg className="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span>INICIAR SESIÓN / REGISTRARSE</span>
               </Link>
-              <span>AREQUIPA · PERÚ</span>
+              <span className="text-neutral-500">AREQUIPA · PERÚ</span>
             </div>
           </div>
         </div>

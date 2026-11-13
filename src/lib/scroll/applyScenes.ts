@@ -90,30 +90,31 @@ export function applyScenes(
     el.style.visibility = abs > 1.3 ? "hidden" : "visible";
   });
 
-  // Capas de equipos con MESETA DE PAUSA (Snap Plateau) para clics perfectos
-  const textParallax = mobile ? 0.15 : 0.35;
+  // Capas de equipos con MESETA DE PAUSA AMPLIA (Snap Plateau) para máxima permanencia visual y clics estables
+  const textParallax = mobile ? 0.12 : 0.25;
 
   textLayers.forEach((el, i) => {
     const d = i - x;
     const abs = Math.abs(d);
     const dir = i % 2 === 0 ? -1 : 1;
 
-    // ── ZONA DE PAUSA ESTABLE ──
-    // Si abs <= 0.42, la tarjeta está fijada al 100% de opacidad y posición central
-    // Si se pasa de 0.42, comienza su transición diagonal de salida
+    // ── ZONA DE PAUSA ESTABLE ULTRA AMPLIA ──
+    // Se extiende la meseta a abs <= 0.65 (en lugar de 0.42), manteniendo
+    // la tarjeta completamente visible (opacidad 100%) y fija en pantalla
+    // durante un rango de scroll mucho mayor para evitar que se desvanezca al apenas llegar.
     let opacity = 0;
     let moveFactor = 0;
 
-    if (abs <= 0.42) {
+    if (abs <= 0.65) {
       opacity = 1;
-      moveFactor = 0; // Se mantiene en pausa firme
+      moveFactor = 0; // Se mantiene en pausa firme y nítida
       el.style.pointerEvents = "auto"; // Habilita clics garantizados
     } else {
-      // Fuera de la meseta: desvanecimiento y desplazamiento suave
-      const transitionProgress = (abs - 0.42) / (1.1 - 0.42);
+      // Fuera de la meseta: desvanecimiento suave y gradual
+      const transitionProgress = (abs - 0.65) / (1.25 - 0.65);
       opacity = Math.max(0, 1 - transitionProgress);
-      moveFactor = (d > 0 ? 1 : -1) * (abs - 0.42);
-      el.style.pointerEvents = opacity > 0.5 ? "auto" : "none";
+      moveFactor = (d > 0 ? 1 : -1) * (abs - 0.65);
+      el.style.pointerEvents = opacity > 0.4 ? "auto" : "none";
     }
 
     const moveX = moveFactor * (travelX * textParallax) * dir;

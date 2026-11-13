@@ -4,19 +4,19 @@
   /* 
    * Paleta Oficial MAQSYMA 2.0 — Obsidian & Industrial Forge Gold
    * Tono base: Obsidiana pura (#07080A) con paneles grafito titanio (#101217).
-   * Acento: Oro forja industrial (#E09F24) con resplandor ámbar (#F7B944).
-   * Alto contraste WCAG AA/AAA y acabados mates industriales.
+   * Acento: Oro forja industrial ESAB vivo (#F59E0B) con resplandor ámbar (#FBBF24).
+   * Alto impacto comercial, contraste nítido y visibilidad industrial.
    */
   --color-carbon:    #07080A;      /* Fondo base obsidiana */
   --color-grafito:   #101217;      /* Superficies de paneles y tarjetas */
-  --color-grafito-2: #191D26;      /* Bordes técnicos de precisión */
-  --color-grafito-3: #242A38;      /* Bordes de foco e interactivos */
-  --color-plata:     #F3F5F9;      /* Texto principal blanco plata */
-  --color-gris:      #9298A6;      /* Texto secundario de alta legibilidad */
-  --color-oro:       #E09F24;      /* Oro forja / soldadura */
-  --color-oro-claro: #F7B944;      /* Resplandor y estados hover */
-  --color-oro-oscuro: #A66E11;     /* Tono profundo de acento */
-  --gradient-oro: linear-gradient(135deg, #F7B944 0%, #E09F24 50%, #A66E11 100%);
+  --color-grafito-2: #1e2433;      /* Bordes técnicos de precisión */
+  --color-grafito-3: #2d364d;      /* Bordes de foco e interactivos */
+  --color-plata:     #FFFFFF;      /* Texto principal blanco puro */
+  --color-gris:      #A3ACB9;      /* Texto secundario de alta legibilidad */
+  --color-oro:       #F59E0B;      /* Oro forja / soldadura ESAB vibrante */
+  --color-oro-claro: #FBBF24;      /* Resplandor y estados hover luminosos */
+  --color-oro-oscuro: #D97706;     /* Tono profundo de acento */
+  --gradient-oro: linear-gradient(135deg, #FDE68A 0%, #F59E0B 50%, #D97706 100%);
 
   --background: var(--color-carbon);
   --foreground: var(--color-plata);
