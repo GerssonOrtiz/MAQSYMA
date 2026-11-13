@@ -6,13 +6,13 @@ export const SeccionMarcas: React.FC = () => {
   const whatsappHref = whatsappLink(copy.contact.brandConsultMessage("ESAB"));
 
   return (
-    <section id="marcas" aria-label="Marcas y Respaldo Industrial" className="w-full py-24 bg-[#08090c] border-t border-[#181a24] text-white">
+    <section id="marcas" aria-label="Respaldo Oficial ESAB" className="w-full py-24 bg-[#0A0C10] border-t border-[#161922] text-white">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="rounded-2xl bg-gradient-to-r from-[#12141c] via-[#0d0f16] to-[#0a0b10] border border-[#222637] p-8 sm:p-14 lg:p-16 flex flex-col lg:flex-row items-center justify-between gap-10">
+        <div className="rounded-2xl bg-gradient-to-r from-[#11141C] via-[#0E1017] to-[#0A0C10] border border-[#1F2534] p-8 sm:p-14 lg:p-16 flex flex-col lg:flex-row items-center justify-between gap-10">
           <div className="max-w-2xl space-y-4">
-            <span className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--color-oro)] block">
-              06 // RESPALDO DE FABRICANTE
-            </span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#131720] border border-[#202636] text-xs font-mono text-[var(--color-oro-claro)] uppercase tracking-wider">
+              Respaldo de Fabricante
+            </div>
             <div className="flex items-center gap-4">
               <h2 className="font-['Syne',sans-serif] text-4xl sm:text-6xl font-black text-white tracking-tight">
                 {copy.marcas.principal}
@@ -41,7 +41,7 @@ export const SeccionMarcas: React.FC = () => {
               </div>
               <div className="border-l border-white/10 pl-3">
                 <span className="text-white block font-bold">SENTINEL™</span>
-                <span>Protección Óptica A50/A60</span>
+                <span>Protección Óptica A60</span>
               </div>
             </div>
           </div>
@@ -51,7 +51,7 @@ export const SeccionMarcas: React.FC = () => {
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto px-8 py-4 rounded bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] hover:brightness-110 active:scale-95 text-center text-xs font-bold uppercase tracking-wider text-[var(--color-carbon)] transition-all shadow-xl shadow-[var(--color-oro)]/20"
+              className="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] hover:brightness-110 active:scale-95 text-center text-xs font-bold uppercase tracking-wider text-[#07080A] transition-all shadow-xl shadow-[var(--color-oro)]/20"
             >
               CONSULTAR DISPONIBILIDAD ESAB →
             </a>

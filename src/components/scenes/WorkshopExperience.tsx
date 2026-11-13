@@ -44,9 +44,10 @@ export const WorkshopExperience: React.FC = () => {
     [isMobile]
   );
 
+  // Inercia con respuesta rápida para que la pausa se sienta instantánea
   useSceneProgress(containerRef, {
     onUpdate: handleProgress,
-    ease: isMobile ? 0.12 : 0.08,
+    ease: isMobile ? 0.14 : 0.1,
   });
 
   const handleJumpToScene = (index: number) => {
@@ -68,13 +69,14 @@ export const WorkshopExperience: React.FC = () => {
     <section
       id="escenas"
       ref={containerRef}
-      aria-label="Recorrido técnico y equipos por proceso industrial"
+      aria-label="Procesos industriales y equipamiento oficial"
       className={`relative w-full ${isJsReady ? "js-ready" : "no-js-fallback"}`}
       style={{
-        height: isJsReady ? `calc(${n} * 125vh)` : "auto",
+        // Altura extendida por escena para garantizar zona de pausa amplia
+        height: isJsReady ? `calc(${n} * 150vh)` : "auto",
       }}
     >
-      {/* Contenedor Sticky para experiencia cinematográfica diagonal */}
+      {/* Contenedor Sticky para experiencia cinematográfica diagonal con pausa */}
       <div
         className={`w-full overflow-hidden ${
           isJsReady
@@ -82,7 +84,7 @@ export const WorkshopExperience: React.FC = () => {
             : "relative h-auto py-16 flex flex-col gap-20"
         }`}
       >
-        {/* Capas de imagen / background cinematográfico */}
+        {/* Capas de imagen / fondo cinematográfico */}
         <div
           ref={layersRef}
           aria-hidden="true"
@@ -106,21 +108,19 @@ export const WorkshopExperience: React.FC = () => {
                     alt={scene.image.alt}
                     fill
                     priority={idx === 0}
-                    className="object-cover object-center filter brightness-[0.65] contrast-[1.1]"
+                    className="object-cover object-center filter brightness-[0.7] contrast-[1.08]"
                     sizes="100vw"
                   />
-                  {/* Overlay gradiente oscuro de alto contraste */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#090A0D] via-[#090A0D]/70 to-[#090A0D]/80" />
-                  <div className="absolute inset-0 bg-black/40" />
-                  {/* Resplandor lateral ámbar de soldadura */}
-                  <div className="absolute top-1/4 right-1/4 w-[480px] h-[480px] bg-[var(--color-oro)]/8 blur-[160px] pointer-events-none rounded-full" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#07080A] via-[#07080A]/65 to-[#07080A]/75" />
+                  <div className="absolute inset-0 bg-black/35" />
+                  <div className="absolute top-1/4 right-1/4 w-[460px] h-[460px] bg-[var(--color-oro)]/8 blur-[150px] pointer-events-none rounded-full" />
                 </div>
               )}
             </div>
           ))}
         </div>
 
-        {/* Capas interactivas: Equipos reales integrados por cada proceso industrial */}
+        {/* Capas interactivas: Equipos reales integrados por cada proceso con pausa al scroll */}
         <div
           ref={textsRef}
           className={
@@ -134,7 +134,6 @@ export const WorkshopExperience: React.FC = () => {
               scene.cta?.message || copy.contact.defaultMessage
             )}`;
 
-            // Obtener los productos reales correspondientes a esta escena
             const sceneProducts = scene.featuredSlugs
               .map((slug) => catalogoProductos.find((p) => p.slug === slug))
               .filter(Boolean);
@@ -145,19 +144,19 @@ export const WorkshopExperience: React.FC = () => {
                 className={`${
                   isJsReady
                     ? "absolute max-w-6xl w-full will-change-transform will-change-opacity pointer-events-auto"
-                    : "relative p-8 rounded-2xl bg-[#12141A] border border-[#1D212B]"
+                    : "relative p-8 rounded-2xl bg-[#101217] border border-[#191D26]"
                 }`}
                 style={{
                   opacity: isJsReady ? (idx === 0 ? 1 : 0) : 1,
                   visibility: isJsReady ? (idx === 0 ? "visible" : "hidden") : "visible",
                 }}
               >
-                {/* Panel Unificado: Cabecera Cinemática + Equipos del Proceso */}
-                <div className="p-6 sm:p-10 rounded-2xl bg-[#0E1015]/90 backdrop-blur-xl border border-[#1F2430] shadow-2xl space-y-8">
+                {/* Tarjeta de proceso con diseño refinado industrial */}
+                <div className="p-6 sm:p-10 rounded-2xl bg-[#0B0D12]/95 backdrop-blur-2xl border border-[#1E2330] shadow-2xl space-y-7">
                   {/* Cabecera de la escena */}
-                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/5 pb-6">
+                  <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-white/5 pb-5">
                     <div>
-                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#171A22] border border-[#262C3A] text-xs font-mono text-[var(--color-oro-claro)] uppercase tracking-wider mb-2">
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#131720] border border-[#232938] text-xs font-mono text-[var(--color-oro-claro)] uppercase tracking-wider mb-2">
                         <span className="w-2 h-2 rounded-full bg-[var(--color-oro)] animate-ping" />
                         <span>{scene.label}</span>
                         <span className="text-neutral-500">·</span>
@@ -173,7 +172,7 @@ export const WorkshopExperience: React.FC = () => {
                     </p>
                   </div>
 
-                  {/* Grid de Equipos del Proceso (Fotos Oficiales de public/equipos) */}
+                  {/* Grid de Equipos del Proceso (con clic asegurado) */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     {sceneProducts.map((equipo) => {
                       if (!equipo) return null;
@@ -182,7 +181,7 @@ export const WorkshopExperience: React.FC = () => {
                       return (
                         <div
                           key={equipo.id}
-                          className="rounded-xl bg-[#13161F] border border-[#202533] hover:border-[var(--color-oro)]/50 p-5 flex flex-col justify-between transition-all duration-300 group shadow-lg"
+                          className="rounded-xl bg-[#10131A] border border-[#1C212E] hover:border-[var(--color-oro)]/60 p-5 flex flex-col justify-between transition-all duration-200 group shadow-lg relative"
                         >
                           <div>
                             {/* Header del producto */}
@@ -194,13 +193,13 @@ export const WorkshopExperience: React.FC = () => {
                             </div>
 
                             {/* Fotografía Oficial del Equipo */}
-                            <div className="relative w-full h-36 my-2 rounded-lg bg-[#090A0D] border border-white/5 flex items-center justify-center p-2 overflow-hidden">
+                            <div className="relative w-full h-36 my-2 rounded-lg bg-[#07080A] border border-white/5 flex items-center justify-center p-2 overflow-hidden">
                               {equipo.imagenUrl ? (
                                 <Image
                                   src={equipo.imagenUrl}
                                   alt={equipo.nombre}
                                   fill
-                                  className="object-contain p-2 filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.9)] group-hover:scale-105 transition-transform duration-300"
+                                  className="object-contain p-2 filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.9)] group-hover:scale-105 transition-transform duration-200"
                                   sizes="(max-width: 768px) 100vw, 300px"
                                 />
                               ) : (
@@ -211,8 +210,8 @@ export const WorkshopExperience: React.FC = () => {
                               )}
                             </div>
 
-                            {/* Título y especificación corta */}
-                            <Link href={`/equipos/${equipo.slug}`}>
+                            {/* Título */}
+                            <Link href={`/equipos/${equipo.slug}`} className="block focus:outline-none focus:underline">
                               <h3 className="font-['Syne',sans-serif] text-base sm:text-lg font-bold text-white group-hover:text-[var(--color-oro-claro)] transition-colors line-clamp-1 mb-1">
                                 {equipo.nombre}
                               </h3>
@@ -222,7 +221,7 @@ export const WorkshopExperience: React.FC = () => {
                               {equipo.descripcionCorta}
                             </p>
 
-                            {/* Especificación técnica clave */}
+                            {/* Especificación técnica */}
                             {equipo.especificaciones && (
                               <div className="text-[10px] font-mono text-neutral-400 border-t border-white/5 pt-2 flex justify-between">
                                 <span>Capacidad:</span>
@@ -233,7 +232,7 @@ export const WorkshopExperience: React.FC = () => {
                             )}
                           </div>
 
-                          {/* Acciones */}
+                          {/* Acciones interactivas directas */}
                           <div className="pt-3 mt-3 border-t border-white/5 flex items-center justify-between gap-2">
                             <Link
                               href={`/equipos/${equipo.slug}`}
@@ -245,7 +244,7 @@ export const WorkshopExperience: React.FC = () => {
                               href={prodQuoteUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="px-3 py-1.5 rounded bg-[var(--color-oro)]/15 hover:bg-[var(--color-oro)] text-[var(--color-oro)] hover:text-[#090A0D] border border-[var(--color-oro)]/30 text-[10px] font-mono font-bold uppercase transition-all"
+                              className="px-3 py-1.5 rounded bg-[var(--color-oro)]/15 hover:bg-[var(--color-oro)] text-[var(--color-oro)] hover:text-[#07080A] border border-[var(--color-oro)]/35 text-[10px] font-mono font-bold uppercase transition-all"
                             >
                               Consultar
                             </a>
@@ -255,17 +254,17 @@ export const WorkshopExperience: React.FC = () => {
                     })}
                   </div>
 
-                  {/* Barra de acción inferior de la escena */}
-                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+                  {/* Barra de acción inferior */}
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-1">
                     <span className="text-xs font-mono text-neutral-500">
-                      Disponibilidad y demostración técnica en Arequipa
+                      Disponibilidad y entrega inmediata en Arequipa y el sur peruano
                     </span>
 
                     <a
                       href={whatsappUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#090A0D] transition-all hover:brightness-110 active:scale-95 shadow-lg shadow-[var(--color-oro)]/20"
+                      className="inline-flex items-center gap-2 rounded bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#07080A] transition-all hover:brightness-110 active:scale-95 shadow-lg shadow-[var(--color-oro)]/20"
                     >
                       <span>{scene.cta.label}</span>
                       <span>→</span>
@@ -285,7 +284,7 @@ export const WorkshopExperience: React.FC = () => {
           >
             <div
               ref={indicatorsRef}
-              className="flex sm:flex-col items-center gap-3 p-2.5 rounded-full bg-[#090A0D]/90 backdrop-blur-md border border-[#1D212B] shadow-2xl"
+              className="flex sm:flex-col items-center gap-3 p-2.5 rounded-full bg-[#07080A]/90 backdrop-blur-md border border-[#191D26] shadow-2xl"
             >
               {scenes.map((scene, i) => (
                 <button
@@ -296,8 +295,8 @@ export const WorkshopExperience: React.FC = () => {
                   title={`${i + 1}. ${scene.label}`}
                   className="group relative flex items-center justify-center p-1 focus:outline-none focus:ring-1 focus:ring-[var(--color-oro)] rounded-full transition-transform"
                 >
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#202533] transition-all duration-300 block" />
-                  <span className="hidden sm:block absolute right-full mr-3 px-2.5 py-1 text-xs font-mono text-neutral-300 bg-[#090A0D] border border-[#1D212B] rounded shadow-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#1C212E] transition-all duration-300 block" />
+                  <span className="hidden sm:block absolute right-full mr-3 px-2.5 py-1 text-xs font-mono text-neutral-300 bg-[#07080A] border border-[#191D26] rounded shadow-lg whitespace-nowrap opacity-0 pointer-events-none group-hover:opacity-100 transition-opacity">
                     {i + 1}. {scene.label}
                   </span>
                 </button>

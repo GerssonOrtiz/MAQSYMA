@@ -7,34 +7,29 @@ export const SeccionVentaAlquiler: React.FC = () => {
   const whatsappAlquiler = whatsappLink("Hola MAQSYMA, deseo consultar disponibilidad y condiciones de alquiler de equipos para obra.");
 
   return (
-    <section id="modalidades" aria-label="Equipos para comprar o alquilar" className="w-full py-24 bg-[#0a0c10] border-t border-[#181a24] relative overflow-hidden">
-      {/* Luz ambiental sutil */}
-      <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-[var(--color-oro)]/5 blur-[160px] pointer-events-none" />
-
+    <section id="modalidades" aria-label="Modalidades de Compra y Alquiler" className="w-full py-24 bg-[#07080A] border-t border-[#161922] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* Cabecera de la sección */}
         <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-          <span className="font-mono text-xs uppercase tracking-[0.25em] text-[var(--color-oro)] block">
-            05 // MODELO COMERCIAL
-          </span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#131720] border border-[#202636] text-xs font-mono text-[var(--color-oro-claro)] uppercase tracking-wider mb-1">
+            Modalidades Comerciales
+          </div>
           <h2 className="font-['Syne',sans-serif] text-3xl sm:text-5xl font-black text-white tracking-tight">
-            EQUIPOS PARA COMPRAR O ALQUILAR
+            Compra Directa y Alquiler
           </h2>
           <p className="text-sm sm:text-base text-neutral-400 font-light">
-            Soluciones adaptadas a la escala y duración de cada proyecto en Arequipa y el corredor minero del sur.
+            Esquemas adaptados a la duración de faena y presupuesto operativo en Arequipa y el sur del país.
           </p>
         </div>
 
-        {/* Comparativa Visual Editorial */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
           {/* Bloque VENTA */}
-          <div className="p-8 sm:p-12 rounded-2xl bg-[#0e1017] border border-[#202332] hover:border-white/20 transition-all duration-300 flex flex-col justify-between shadow-2xl">
+          <div className="p-8 sm:p-12 rounded-2xl bg-[#0E1117] border border-[#1C212E] hover:border-white/20 transition-all duration-300 flex flex-col justify-between shadow-2xl">
             <div>
               <div className="flex items-center justify-between mb-8">
                 <span className="font-mono text-xs uppercase tracking-widest text-[var(--color-oro)]">
                   MODALIDAD 01
                 </span>
-                <span className="text-[11px] font-mono text-neutral-400 bg-white/5 px-2.5 py-1 rounded">
+                <span className="text-[11px] font-mono text-neutral-400 bg-white/5 px-3 py-1 rounded-full">
                   {copy.modalidades.venta.subtitulo}
                 </span>
               </div>
@@ -61,14 +56,14 @@ export const SeccionVentaAlquiler: React.FC = () => {
               href={whatsappVenta}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-4 rounded bg-[#171a24] hover:bg-[#202434] border border-[#2a2f42] text-center text-xs font-mono font-bold uppercase tracking-wider text-white transition-all"
+              className="w-full py-4 rounded-xl bg-[#151922] hover:bg-[#1E2330] border border-[#272E3F] text-center text-xs font-mono font-bold uppercase tracking-wider text-white transition-all"
             >
               {copy.modalidades.venta.cta} →
             </a>
           </div>
 
           {/* Bloque ALQUILER */}
-          <div className="p-8 sm:p-12 rounded-2xl bg-gradient-to-b from-[#13151f] to-[#0d0e15] border border-[var(--color-oro)]/40 hover:border-[var(--color-oro)] transition-all duration-300 flex flex-col justify-between shadow-2xl shadow-black/80 relative">
+          <div className="p-8 sm:p-12 rounded-2xl bg-gradient-to-b from-[#131620] to-[#0D1017] border border-[var(--color-oro)]/40 hover:border-[var(--color-oro)] transition-all duration-300 flex flex-col justify-between shadow-2xl relative">
             <div className="absolute top-0 right-0 w-48 h-48 bg-[var(--color-oro)]/10 rounded-full blur-3xl pointer-events-none" />
 
             <div>
@@ -76,7 +71,7 @@ export const SeccionVentaAlquiler: React.FC = () => {
                 <span className="font-mono text-xs uppercase tracking-widest text-[var(--color-oro)]">
                   MODALIDAD 02
                 </span>
-                <span className="text-[11px] font-mono text-amber-300 bg-amber-500/10 border border-amber-500/20 px-2.5 py-1 rounded">
+                <span className="text-[11px] font-mono text-amber-300 bg-amber-500/10 border border-amber-500/20 px-3 py-1 rounded-full">
                   {copy.modalidades.alquiler.subtitulo}
                 </span>
               </div>
@@ -103,7 +98,7 @@ export const SeccionVentaAlquiler: React.FC = () => {
               href={whatsappAlquiler}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full py-4 rounded bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] hover:brightness-110 active:scale-95 text-center text-xs font-bold uppercase tracking-wider text-[var(--color-carbon)] transition-all shadow-xl shadow-[var(--color-oro)]/20"
+              className="w-full py-4 rounded-xl bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] hover:brightness-110 active:scale-95 text-center text-xs font-bold uppercase tracking-wider text-[#07080A] transition-all shadow-xl shadow-[var(--color-oro)]/20"
             >
               {copy.modalidades.alquiler.cta} →
             </a>

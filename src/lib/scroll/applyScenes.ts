@@ -1,14 +1,18 @@
 /**
- * Aplicación de transformaciones continuas y fluidas en capas del recorrido técnico.
+ * Aplicación de transformaciones en capas con sistema de meseta/pausa (Snap Plateau).
  *
- * p: progreso suavizado entre 0 y 1
- * imageLayers: elementos DOM de fondo/imagen de cada escena
- * textLayers: elementos DOM de textos correspondientes
- * mobile: bandera booleana para dispositivos táctiles/móviles
- * reducedMotion: bandera booleana de accesibilidad
+ * p: progreso de scroll suavizado (0 a 1)
+ * imageLayers: capas de fondo
+ * textLayers: capas interactivas de tarjetas de equipos
+ * indicators: puntos de navegación lateral
+ * mobile: indicador de dispositivo móvil
+ * reducedMotion: accesibilidad para reducción de movimiento
  *
- * Cinemática: Movimiento de cámara diagonal (X y Y) con zoom dinámico y oscilación lateral
- * de un lado para otro simulando un dolly track cinematográfico en taller.
+ * Snap Plateau:
+ * Cada escena 'i' tiene un rango de meseta (d <= 0.45) donde la tarjeta se mantiene
+ * completamente opaca (opacity: 1), centrada y con pointer-events: auto habilitado,
+ * permitiendo hacer clic e interactuar con los equipos sin desvanecimientos repentinos
+ * al scrollear rápido.
  */
 export function applyScenes(
   p: number,
@@ -32,6 +36,7 @@ export function applyScenes(
       el.style.opacity = i === activeIndex ? "1" : "0";
       el.style.transform = "none";
       el.style.visibility = i === activeIndex ? "visible" : "hidden";
+      el.style.pointerEvents = i === activeIndex ? "auto" : "none";
     });
     indicators.forEach((el, i) => {
       if (i === activeIndex) {
@@ -47,18 +52,20 @@ export function applyScenes(
     return;
   }
 
-  const x = p * (n - 1);         // posición continua dentro del recorrido
-  const travelY = mobile ? 4 : 8; // desplazamiento vertical en vh
-  const travelX = mobile ? 6 : 14; // desplazamiento horizontal diagonal en vw (de un lado para otro)
+  const x = p * (n - 1);
   const activeIndex = Math.min(n - 1, Math.max(0, Math.round(x)));
 
-  // Actualizar indicadores de progreso
+  // Parámetros de movimiento cinematográfico diagonal
+  const travelY = mobile ? 5 : 9;
+  const travelX = mobile ? 8 : 15;
+
+  // Actualizar indicadores laterales
   indicators.forEach((el, i) => {
     const d = Math.abs(i - x);
     if (i === activeIndex) {
       el.setAttribute("data-active", "true");
       el.style.backgroundColor = "var(--color-oro)";
-      el.style.transform = "scale(1.3)";
+      el.style.transform = "scale(1.35)";
     } else {
       el.removeAttribute("data-active");
       el.style.backgroundColor = d < 0.6 ? "var(--color-oro-oscuro)" : "var(--color-grafito-2)";
@@ -66,40 +73,54 @@ export function applyScenes(
     }
   });
 
-  // Capas de imagen / background cinematográfico con movimiento de cámara diagonal y alternante
+  // Capas de fondo cinemático
   imageLayers.forEach((el, i) => {
     const d = i - x;
     const abs = Math.abs(d);
 
-    // Dirección diagonal alternada: escenas pares vienen desde la izquierda/arriba, impares desde la derecha/abajo
     const dir = i % 2 === 0 ? 1 : -1;
     const moveX = d * travelX * dir;
     const moveY = d * travelY;
-    const rot = d * (mobile ? 1 : 2.5) * dir; // Sutil inclinación angular de cámara (roll de lente)
-    const scale = 1.05 + abs * 0.08;
+    const rot = d * (mobile ? 1 : 2) * dir;
+    const scale = 1.04 + abs * 0.06;
 
-    // Opacidad continua (fundido gradual)
-    el.style.opacity = String(Math.max(0, 1 - abs * 1.15));
-    // Transformación acelerada por GPU: diagonal 3D (X + Y) + rotación sutil
+    // Transición suave de fondo
+    el.style.opacity = String(Math.max(0, 1 - abs * 1.1));
     el.style.transform = `translate3d(${moveX}vw, ${moveY}vh, 0) scale(${scale}) rotate(${rot}deg)`;
     el.style.visibility = abs > 1.3 ? "hidden" : "visible";
   });
 
-  // Capas de texto con contra-movimiento diagonal cinemático
-  const textParallax = mobile ? 0.2 : 0.45;
+  // Capas de equipos con MESETA DE PAUSA (Snap Plateau) para clics perfectos
+  const textParallax = mobile ? 0.15 : 0.35;
+
   textLayers.forEach((el, i) => {
     const d = i - x;
     const abs = Math.abs(d);
-
-    // Los textos se mueven en contra-fase diagonal respecto al fondo para crear profundidad tridimensional
     const dir = i % 2 === 0 ? -1 : 1;
-    const moveX = d * (travelX * textParallax) * dir;
-    const moveY = d * (travelY * (1 + textParallax));
 
-    const opacity = Math.max(0, 1 - abs * 1.35);
+    // ── ZONA DE PAUSA ESTABLE ──
+    // Si abs <= 0.42, la tarjeta está fijada al 100% de opacidad y posición central
+    // Si se pasa de 0.42, comienza su transición diagonal de salida
+    let opacity = 0;
+    let moveFactor = 0;
+
+    if (abs <= 0.42) {
+      opacity = 1;
+      moveFactor = 0; // Se mantiene en pausa firme
+      el.style.pointerEvents = "auto"; // Habilita clics garantizados
+    } else {
+      // Fuera de la meseta: desvanecimiento y desplazamiento suave
+      const transitionProgress = (abs - 0.42) / (1.1 - 0.42);
+      opacity = Math.max(0, 1 - transitionProgress);
+      moveFactor = (d > 0 ? 1 : -1) * (abs - 0.42);
+      el.style.pointerEvents = opacity > 0.5 ? "auto" : "none";
+    }
+
+    const moveX = moveFactor * (travelX * textParallax) * dir;
+    const moveY = moveFactor * (travelY * (1 + textParallax));
 
     el.style.opacity = String(opacity);
     el.style.transform = `translate3d(${moveX}vw, ${moveY}vh, 0)`;
-    el.style.visibility = abs > 1.15 ? "hidden" : "visible";
+    el.style.visibility = opacity <= 0.01 ? "hidden" : "visible";
   });
 }

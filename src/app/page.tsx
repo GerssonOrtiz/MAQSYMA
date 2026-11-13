@@ -1,7 +1,6 @@
 import React from "react";
 import { Nav } from "@/components/nav/Nav";
 import { Hero } from "@/components/hero/Hero";
-import { TransicionNarrativa } from "@/components/home/TransicionNarrativa";
 import { WorkshopExperience } from "@/components/scenes/WorkshopExperience";
 import { CategoriasExperiencia } from "@/components/home/CategoriasExperiencia";
 import { SeccionVentaAlquiler } from "@/components/home/SeccionVentaAlquiler";
@@ -16,44 +15,40 @@ import { catalogoProductos } from "@/data/catalogoOficial";
 export default function HomePage() {
   return (
     <div className="relative min-h-screen bg-[var(--color-carbon)] text-[var(--color-plata)] flex flex-col justify-between selection:bg-[var(--color-oro)] selection:text-[var(--color-carbon)]">
-      {/* Intro cinematográfico de entrada */}
+      {/* Intro cinematográfico de bienvenida */}
       <IntroScreen />
 
-      {/* Navegación premium industrial */}
+      {/* Navegación premium fija */}
       <Nav />
 
-      {/* Arquitectura Unificada MAQSYMA 2.0: Escenas Cinematográficas + Equipos en Venta */}
+      {/* Contenido Principal MAQSYMA 2.0 */}
       <main className="flex-1 w-full">
-        {/* 1. Hero Cinematográfico Industrial con Video y Acceso Directo */}
+        {/* 1. Hero Cinematográfico en Pantalla Completa (GSAP loop) */}
         <Hero />
 
-        {/* 2. Manifiesto Operativo / Transición Narrativa */}
-        <TransicionNarrativa />
-
-        {/* 3. Escenas Cinematográficas Diagonales Integradas con Equipos Reales por Proceso */}
-        {/* Entrada = Equipos Insignia; Zonas MIG/MAG, TIG, MMA, Plasma/EPP y Alquiler con fotos reales */}
+        {/* 2. Escenas Cinematográficas Diagonales con pausa al scrollear y equipos integrados */}
         <WorkshopExperience />
 
-        {/* 4. Sistema de Exploración por Líneas y Categorías */}
+        {/* 3. Líneas y Categorías Industriales */}
         <CategoriasExperiencia />
 
-        {/* 5. Modalidad Comercial: Compra y Alquiler Operativo */}
+        {/* 4. Modalidad Comercial: Compra y Alquiler */}
         <SeccionVentaAlquiler />
 
-        {/* 6. Respaldo de Fabricante (ESAB Oficial) */}
+        {/* 5. Respaldo Oficial ESAB */}
         <SeccionMarcas />
 
-        {/* 7. Catálogo Completo al Final con Buscador, Filtros y Fichas */}
+        {/* 6. Catálogo Completo al Final con Búsqueda y Filtros Reales */}
         <CatalogoExplorer productos={catalogoProductos} />
 
-        {/* 8. Canal de Atención y Conversión Oficial WhatsApp */}
+        {/* 7. Canal de Atención y Conversión WhatsApp */}
         <Contacto />
       </main>
 
-      {/* Footer Industrial Oficial */}
+      {/* Footer Industrial */}
       <Footer />
 
-      {/* Botón flotante WhatsApp contextual */}
+      {/* Botón Flotante WhatsApp */}
       <FloatingWhatsApp />
     </div>
   );
