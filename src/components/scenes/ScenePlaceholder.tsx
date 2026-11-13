@@ -166,8 +166,8 @@ export const ScenePlaceholder: React.FC<ScenePlaceholderProps> = ({
           {process}
         </span>
 
-        <span className="text-[10px] font-mono text-[var(--color-gris)] px-2.5 py-0.5 rounded border border-[var(--color-grafito-2)] bg-[var(--color-carbon)]/80 uppercase">
-          FOTO DEL TALLER: PLACEHOLDER TEMPORAL
+        <span className="text-[10px] font-mono text-neutral-400 px-3 py-1 rounded border border-white/10 bg-black/60 uppercase tracking-widest">
+          ZONA INDUSTRIAL // CONTROL TÉCNICO
         </span>
       </div>
 

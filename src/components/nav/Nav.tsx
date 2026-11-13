@@ -12,7 +12,7 @@ export const Nav: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(window.scrollY > 40);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -36,13 +36,15 @@ export const Nav: React.FC = () => {
     };
   }, [mobileMenuOpen]);
 
+  // Estructura oficial requerida por nuevo_diseño.md:
+  // PRODUCTOS, CATEGORÍAS, MARCAS, VENTA Y ALQUILER, CONTACTO
   const navLinks = [
-    { href: "/#productos", label: "Catálogo" },
-    { href: "/#modalidades", label: "Venta & Alquiler" },
-    { href: "/#soluciones", label: "Soluciones" },
-    { href: "/#soporte", label: "Servicio Técnico" },
-    { href: "/#nosotros", label: "Nosotros" },
-    { href: "/#contacto", label: "Contacto" },
+    { href: "/#destacados", label: "DESTACADOS" },
+    { href: "/#categorias", label: "CATEGORÍAS" },
+    { href: "/#productos", label: "PRODUCTOS" },
+    { href: "/#modalidades", label: "VENTA Y ALQUILER" },
+    { href: "/#marcas", label: "MARCAS" },
+    { href: "/#contacto", label: "CONTACTO" },
   ];
 
   const whatsappHref = whatsappLink(copy.contact.defaultMessage);
@@ -50,124 +52,114 @@ export const Nav: React.FC = () => {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           scrolled
-            ? "bg-[#0b0c0e]/95 backdrop-blur-md border-b border-[#25282f] shadow-2xl shadow-black/60 py-3.5"
-            : "bg-gradient-to-b from-black/80 to-transparent py-5"
+            ? "bg-[#090a0d]/95 backdrop-blur-md border-b border-[#1f222d] shadow-2xl py-3"
+            : "bg-gradient-to-b from-[#090a0d]/90 via-[#090a0d]/50 to-transparent py-5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          {/* Logo oficial de Maqsyma */}
+          {/* Logo oficial MAQSYMA */}
           <Link
             href="/"
-            className="focus:outline-none focus:ring-2 focus:ring-[var(--color-oro)] rounded"
-            aria-label="Ir al inicio de Maqsyma"
+            className="focus:outline-none focus:ring-1 focus:ring-[var(--color-oro)] rounded flex items-center"
+            aria-label="MAQSYMA — Inicio"
           >
-            <Logo showText />
+            <Logo showText={false} />
           </Link>
 
-          {/* Menú de navegación desktop */}
-          <nav className="hidden md:flex items-center gap-7 text-sm font-medium">
+          {/* Menú Desktop con tipografía técnica y espaciado editorial */}
+          <nav className="hidden lg:flex items-center gap-7 text-[12px] font-mono tracking-wider">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-neutral-300 hover:text-[var(--color-oro)] transition-colors duration-200 focus:outline-none focus:ring-1 focus:ring-[var(--color-oro)] rounded px-1"
+                className="text-neutral-400 hover:text-[var(--color-oro-claro)] uppercase transition-colors duration-200 relative group py-1"
               >
-                {link.label}
+                <span>{link.label}</span>
+                <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[var(--color-oro)] transition-all duration-300 group-hover:w-full" />
               </a>
             ))}
           </nav>
 
-          {/* CTA WhatsApp & Acceso Admin */}
-          <div className="hidden sm:flex items-center gap-3">
+          {/* CTAs Funcionales */}
+          <div className="hidden md:flex items-center gap-4">
             <Link
               href="/admin/login"
-              className="text-xs font-mono text-neutral-400 hover:text-white px-2.5 py-1.5 rounded border border-white/5 hover:border-white/20 transition-all"
+              className="text-[11px] font-mono text-neutral-400 hover:text-white px-2.5 py-1.5 rounded border border-white/5 hover:border-white/20 transition-all uppercase tracking-wider"
             >
-              Portal Admin
+              PORTAL ADMIN
             </Link>
 
             <a
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-md bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--color-carbon)] transition-all duration-200 hover:brightness-110 active:scale-95 shadow-md shadow-[var(--color-oro)]/10"
+              className="inline-flex items-center gap-2 rounded bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--color-carbon)] transition-all duration-200 hover:brightness-110 active:scale-95 shadow-md shadow-[var(--color-oro)]/15"
             >
-              <span>Cotizar</span>
-              <span>→</span>
+              <span>HABLAR CON MAQSYMA</span>
+              <span className="text-sm">→</span>
             </a>
           </div>
 
-          {/* Botón hamburguesa móvil */}
-          <div className="md:hidden flex items-center gap-2">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-neutral-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-oro)] rounded"
-              aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú principal"}
-              aria-expanded={mobileMenuOpen}
+          {/* Botón Mobile Menu */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="lg:hidden p-2 text-neutral-300 hover:text-white focus:outline-none focus:ring-1 focus:ring-[var(--color-oro)] rounded"
+            aria-label="Abrir menú de navegación"
+            aria-expanded={mobileMenuOpen}
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
               {mobileMenuOpen ? (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               ) : (
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               )}
-            </button>
-          </div>
+            </svg>
+          </button>
         </div>
       </header>
 
-      {/* Menú Móvil Fullscreen / Drawer */}
+      {/* Drawer Móvil Fullscreen */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-[#07080a]/98 backdrop-blur-xl flex flex-col justify-between p-6 md:hidden animate-fadeIn">
-          <div className="flex items-center justify-between border-b border-[#25282f] pb-4">
-            <Logo showText />
-            <button
-              onClick={() => setMobileMenuOpen(false)}
-              className="p-2 text-neutral-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-oro)] rounded"
-              aria-label="Cerrar menú"
-            >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          <div className="flex flex-col gap-5 my-auto">
-            {navLinks.map((link) => (
+        <div className="fixed inset-0 z-40 bg-[#0a0b0e]/98 backdrop-blur-xl lg:hidden flex flex-col justify-between pt-28 pb-10 px-8 animate-fadeIn">
+          <nav className="flex flex-col gap-6">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[var(--color-oro)] border-b border-white/10 pb-2">
+              ÍNDICE DE NAVEGACIÓN
+            </span>
+            {navLinks.map((link, idx) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="font-['Syne',sans-serif] text-2xl font-bold text-neutral-200 hover:text-[var(--color-oro)] transition-colors"
+                className="text-2xl font-bold font-['Syne',sans-serif] text-neutral-200 hover:text-[var(--color-oro)] transition-colors flex items-center justify-between"
               >
-                {link.label}
+                <span>{link.label}</span>
+                <span className="text-xs font-mono text-neutral-400">0{idx + 1}</span>
               </a>
             ))}
-          </div>
+          </nav>
 
-          <div className="space-y-3 pt-6 border-t border-[#25282f]">
+          <div className="space-y-4 pt-8 border-t border-white/10">
             <a
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full py-3.5 rounded-md bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] text-center font-bold text-sm uppercase tracking-wider text-[var(--color-carbon)] block"
+              className="w-full flex items-center justify-center gap-2 rounded bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] py-3 text-xs font-bold uppercase tracking-wider text-[var(--color-carbon)]"
             >
-              Contactar por WhatsApp
+              <span>HABLAR CON MAQSYMA</span>
+              <span>→</span>
             </a>
-            <div className="text-center">
-              <Link
-                href="/admin/login"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-xs font-mono text-neutral-500 hover:text-neutral-300"
-              >
-                Acceso Administrador →
+            <div className="flex justify-between items-center text-xs font-mono text-neutral-400 pt-2">
+              <Link href="/admin/login" onClick={() => setMobileMenuOpen(false)} className="hover:text-white">
+                PORTAL PRIVADO
               </Link>
+              <span>AREQUIPA · PERÚ</span>
             </div>
           </div>
         </div>

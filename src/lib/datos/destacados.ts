@@ -1,5 +1,5 @@
 import { Equipo } from "@/types/equipo";
-import { equiposDemo } from "@/data/equiposDemo";
+import { catalogoProductos } from "@/data/catalogoOficial";
 import { createClient } from "@/lib/supabase/server";
 
 export type SeccionTipo = "mas_vendidos" | "mejor_valorados" | "nuevos";
@@ -60,13 +60,32 @@ export async function getSeccion(seccion: SeccionTipo): Promise<Equipo[]> {
 }
 
 function getDemoFallback(seccion: SeccionTipo): Equipo[] {
+  const lista: Equipo[] = catalogoProductos.map((p) => ({
+    id: p.id,
+    nombre: p.nombre,
+    modelo: p.modelo,
+    marca: p.marca || "ESAB",
+    familia: (p.proceso === "MMA" ? "ELECTRODO" : p.proceso === "MIG/MAG" ? "MIG/MAG" : p.proceso === "TIG" ? "TIG" : "MULTIPROCESO") as any,
+    descripcionCorta: p.descripcionCorta,
+    especificaciones: (p.especificaciones as Record<string, string>) || {},
+    precioVenta: p.precioVenta,
+    precioAntesVenta: p.precioAntesVenta,
+    precioAlquiler: p.precioAlquiler,
+    unidadAlquiler: p.unidadAlquiler,
+    imagenUrl: p.imagenUrl || undefined,
+    disponibleVenta: p.disponibleVenta,
+    disponibleAlquiler: p.disponibleAlquiler,
+    activo: p.activo ?? true,
+    esDemo: false,
+  }));
+
   switch (seccion) {
     case "mas_vendidos":
-      return equiposDemo.mas_vendido;
+      return lista.slice(0, 3);
     case "mejor_valorados":
-      return equiposDemo.mejor_valorado;
+      return lista.slice(3, 6);
     case "nuevos":
-      return equiposDemo.nuevo;
+      return lista.slice(6, 9);
   }
 }
 

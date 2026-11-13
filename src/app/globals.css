@@ -1,44 +1,46 @@
 @import "tailwindcss";
 
 :root {
-  /* Paleta Maqsyma (01-concepto-y-marca.md) */
-  --color-carbon: #0D0E10;      /* fondo principal */
-  --color-grafito: #1A1C20;     /* superficies, tarjetas */
-  --color-grafito-2: #25282E;   /* bordes y superficies elevadas */
-  --color-plata: #F4F5F7;       /* texto principal */
-  --color-gris: #8A8F98;        /* texto secundario */
-  --color-oro: #C9A24A;         /* acento principal */
-  --color-oro-claro: #E3C26B;   /* brillo del acento */
-  --color-oro-oscuro: #A67C2E;  /* sombras del acento */
+  /* Paleta Oficial MAQSYMA 2.0 — Identidad Industrial Cinematográfica */
+  --color-carbon:    #0D0E10;
+  --color-grafito:   #1A1C20;
+  --color-grafito-2: #25282E;
+  --color-plata:     #F4F5F7;
+  --color-gris:      #8A8F98;
+  --color-oro:       #C9A24A;
+  --color-oro-claro: #E3C26B;
+  --color-oro-oscuro: #A67C2E;
   --gradient-oro: linear-gradient(135deg, #E3C26B 0%, #C9A24A 45%, #A67C2E 100%);
 
-  /* Base bindings */
   --background: var(--color-carbon);
   --foreground: var(--color-plata);
 }
 
 @theme inline {
-  --color-carbon: var(--color-carbon);
-  --color-grafito: var(--color-grafito);
+  --color-carbon:    var(--color-carbon);
+  --color-grafito:   var(--color-grafito);
   --color-grafito-2: var(--color-grafito-2);
-  --color-plata: var(--color-plata);
-  --color-gris: var(--color-gris);
-  --color-oro: var(--color-oro);
+  --color-plata:     var(--color-plata);
+  --color-gris:      var(--color-gris);
+  --color-oro:       var(--color-oro);
   --color-oro-claro: var(--color-oro-claro);
   --color-oro-oscuro: var(--color-oro-oscuro);
 
   --font-montserrat: var(--font-montserrat), sans-serif;
-  --font-syne: var(--font-syne), sans-serif;
-  --font-inter: var(--font-inter), sans-serif;
+  --font-syne:       var(--font-syne), sans-serif;
+  --font-inter:      var(--font-inter), sans-serif;
 }
 
-/* Reglas globales de renderizado industrial y tipografía */
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: var(--color-carbon);
+  background-color: #08090b;
   color: var(--color-plata);
   font-family: var(--font-inter), sans-serif;
   overflow-x: hidden;
@@ -46,13 +48,46 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Numeración tabular para specs y cotizaciones */
+/* Tipografía tabular para specs y cotizaciones */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
-/* Estilo para selecciones consistente con la identidad de marca */
+/* Selección de marca */
 ::selection {
   background-color: var(--color-oro);
   color: var(--color-carbon);
+}
+
+/* Scrollbar industrial mínima */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #08090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #252830;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-oro-oscuro);
+}
+
+/* Animación fade-in para drawers móviles */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 220ms ease-out forwards;
+}
+
+/* Reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

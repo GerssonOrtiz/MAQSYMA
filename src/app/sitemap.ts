@@ -1,12 +1,11 @@
 import { MetadataRoute } from "next";
-import { equiposDemo } from "@/data/equiposDemo";
+import { catalogoProductos } from "@/data/catalogoOficial";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://maqsyma.vercel.app";
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://maqsyma-app.vercel.app";
 
-  const todos = [...equiposDemo.mas_vendido, ...equiposDemo.mejor_valorado, ...equiposDemo.nuevo];
-  const equipoRoutes: MetadataRoute.Sitemap = todos.map((e) => ({
-    url: `${baseUrl}/equipos/${e.modelo.toLowerCase().replace(/[^a-z0-9]/g, "-")}`,
+  const equipoRoutes: MetadataRoute.Sitemap = catalogoProductos.map((e) => ({
+    url: `${baseUrl}/equipos/${e.slug || e.modelo.toLowerCase().replace(/[^a-z0-9]/g, "-")}`,
     lastModified: new Date(),
     changeFrequency: "monthly" as const,
     priority: 0.8,

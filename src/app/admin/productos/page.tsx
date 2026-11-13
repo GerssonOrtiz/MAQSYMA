@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { AdminHeader } from "@/components/admin/AdminHeader";
-import { equiposDemo } from "@/data/equiposDemo";
+import { catalogoProductos } from "@/data/catalogoOficial";
 import { Equipo } from "@/types/equipo";
 
 export default function AdminProductosPage() {
@@ -43,12 +43,24 @@ export default function AdminProductosPage() {
           return;
         }
       }
-      // Fallback si la base de datos está vacía
-      const fallbackList = [
-        ...equiposDemo.mas_vendido,
-        ...equiposDemo.mejor_valorado,
-        ...equiposDemo.nuevo,
-      ];
+      // Fallback si la base de datos está vacía: usar catálogo oficial verificado
+      const fallbackList: Equipo[] = catalogoProductos.map((p) => ({
+        id: p.id,
+        nombre: p.nombre,
+        modelo: p.modelo,
+        marca: p.marca || "ESAB",
+        familia: (p.proceso === "MMA" ? "ELECTRODO" : p.proceso === "MIG/MAG" ? "MIG/MAG" : p.proceso === "TIG" ? "TIG" : "MULTIPROCESO") as any,
+        descripcionCorta: p.descripcionCorta,
+        imagenUrl: p.imagenUrl || undefined,
+        precioVenta: p.precioVenta,
+        precioAntesVenta: p.precioAntesVenta,
+        precioAlquiler: p.precioAlquiler,
+        unidadAlquiler: p.unidadAlquiler || "mes",
+        disponibleVenta: p.disponibleVenta,
+        disponibleAlquiler: p.disponibleAlquiler,
+        activo: p.activo ?? true,
+        esDemo: false,
+      }));
       setEquipos(fallbackList);
     } catch (err: any) {
       setErrorMsg(err.message || "Error conectando con el catálogo");

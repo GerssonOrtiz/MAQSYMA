@@ -3,13 +3,32 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { AdminHeader } from "@/components/admin/AdminHeader";
-import { equiposDemo } from "@/data/equiposDemo";
+import { catalogoProductos } from "@/data/catalogoOficial";
 import { Equipo } from "@/types/equipo";
 
+const equiposBase: Equipo[] = catalogoProductos.map((p) => ({
+  id: p.id,
+  nombre: p.nombre,
+  modelo: p.modelo,
+  marca: p.marca || "ESAB",
+  familia: (p.proceso === "MMA" ? "ELECTRODO" : p.proceso === "MIG/MAG" ? "MIG/MAG" : p.proceso === "TIG" ? "TIG" : "MULTIPROCESO") as any,
+  descripcionCorta: p.descripcionCorta,
+  especificaciones: (p.especificaciones as Record<string, string>) || {},
+  precioVenta: p.precioVenta,
+  precioAntesVenta: p.precioAntesVenta,
+  precioAlquiler: p.precioAlquiler,
+  unidadAlquiler: p.unidadAlquiler,
+  imagenUrl: p.imagenUrl || undefined,
+  disponibleVenta: p.disponibleVenta,
+  disponibleAlquiler: p.disponibleAlquiler,
+  activo: p.activo ?? true,
+  esDemo: false,
+}));
+
 export default function AdminRankingsPage() {
-  const [masVendidos, setMasVendidos] = useState<Equipo[]>(equiposDemo.mas_vendido);
-  const [mejorValorados, setMejorValorados] = useState<Equipo[]>(equiposDemo.mejor_valorado);
-  const [nuevos, setNuevos] = useState<Equipo[]>(equiposDemo.nuevo);
+  const [masVendidos, setMasVendidos] = useState<Equipo[]>(equiposBase.slice(0, 3));
+  const [mejorValorados, setMejorValorados] = useState<Equipo[]>(equiposBase.slice(3, 6));
+  const [nuevos, setNuevos] = useState<Equipo[]>(equiposBase.slice(6, 9));
   const [guardadoMsg, setGuardadoMsg] = useState(false);
 
   const subir = (lista: Equipo[], setLista: React.Dispatch<React.SetStateAction<Equipo[]>>, index: number) => {

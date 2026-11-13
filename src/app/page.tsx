@@ -1,11 +1,12 @@
 import React from "react";
 import { Nav } from "@/components/nav/Nav";
 import { Hero } from "@/components/hero/Hero";
-import { AccesoCategorias } from "@/components/catalogo/AccesoCategorias";
-import { CatalogoExplorer } from "@/components/catalogo/CatalogoExplorer";
-import { ModalidadesVentaAlquiler } from "@/components/secciones/ModalidadesVentaAlquiler";
-import { SolucionesAplicacion } from "@/components/secciones/SolucionesAplicacion";
-import { SoporteTecnico } from "@/components/secciones/SoporteTecnico";
+import { TransicionNarrativa } from "@/components/home/TransicionNarrativa";
+import { CategoriasExperiencia } from "@/components/home/CategoriasExperiencia";
+import { ProductosDestacados } from "@/components/home/ProductosDestacados";
+import { CatalogoExplorer } from "@/components/home/CatalogoExplorer";
+import { SeccionVentaAlquiler } from "@/components/home/SeccionVentaAlquiler";
+import { SeccionMarcas } from "@/components/home/SeccionMarcas";
 import { WorkshopExperience } from "@/components/scenes/WorkshopExperience";
 import { Contacto } from "@/components/contact/Contacto";
 import { Footer } from "@/components/footer/Footer";
@@ -15,44 +16,47 @@ import { catalogoProductos } from "@/data/catalogoOficial";
 
 export default function HomePage() {
   return (
-    <div className="relative min-h-screen bg-[var(--color-carbon)] text-[var(--color-plata)] flex flex-col justify-between selection:bg-[var(--color-oro)] selection:text-[var(--color-carbon)]">
-      {/* Pantalla de bienvenida con logo al abrir sesión */}
+    <div className="relative min-h-screen bg-[#08090b] text-[var(--color-plata)] flex flex-col justify-between selection:bg-[var(--color-oro)] selection:text-[var(--color-carbon)]">
+      {/* Intro cinematográfico de entrada */}
       <IntroScreen />
 
-      {/* Barra de navegación superior fija */}
+      {/* Navegación premium minimalista */}
       <Nav />
 
-      {/* Contenido principal de MAQSYMA 2.0 */}
+      {/* Arquitectura Narrativa y Comercial MAQSYMA 2.0 */}
       <main className="flex-1 w-full">
-        {/* 1. Hero industrial cinematográfico */}
+        {/* 1. Hero Cinematográfico Industrial */}
         <Hero />
 
-        {/* 2. Acceso directo a líneas de producto */}
-        <AccesoCategorias />
+        {/* 2. Transición Narrativa Editorial */}
+        <TransicionNarrativa />
 
-        {/* 3. Catálogo interactivo con filtros reales y búsqueda */}
+        {/* 3. Composición Asimétrica de Productos Destacados */}
+        <ProductosDestacados productos={catalogoProductos} />
+
+        {/* 4. Sistema de Categorías */}
+        <CategoriasExperiencia />
+
+        {/* 5. Catálogo Industrial con Filtros Reales */}
         <CatalogoExplorer productos={catalogoProductos} />
 
-        {/* 4. Modalidades de negocio: Venta y Alquiler */}
-        <ModalidadesVentaAlquiler />
+        {/* 6. Sección Comercial: Compra y Alquiler */}
+        <SeccionVentaAlquiler />
 
-        {/* 5. Soluciones aplicadas por sector industrial */}
-        <SolucionesAplicacion />
+        {/* 7. Respaldo de Fabricante y Marcas */}
+        <SeccionMarcas />
 
-        {/* 6. Soporte técnico y asesoría */}
-        <SoporteTecnico />
-
-        {/* 7. Recorrido visual del taller industrial */}
+        {/* 8. Experiencia Inmersiva de Taller e Industria */}
         <WorkshopExperience />
 
-        {/* 8. Contacto directo y canal de atención */}
+        {/* 9. Contacto y Conversión Directa */}
         <Contacto />
       </main>
 
-      {/* Footer comercial */}
+      {/* Footer Industrial Oficial */}
       <Footer />
 
-      {/* Botón flotante oficial de WhatsApp */}
+      {/* Botón flotante WhatsApp contextual */}
       <FloatingWhatsApp />
     </div>
   );
