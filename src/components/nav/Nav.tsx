@@ -12,13 +12,12 @@ export const Nav: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 30);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Cerrar menú móvil al presionar tecla Escape
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -38,11 +37,12 @@ export const Nav: React.FC = () => {
   }, [mobileMenuOpen]);
 
   const navLinks = [
-    { href: "#taller", label: "Taller" },
-    { href: "#mas-vendidos", label: "Más vendidos" },
-    { href: "#mejor-valorados", label: "Mejor valorados" },
-    { href: "#nuevos", label: "Nuevos" },
-    { href: "#contacto", label: "Contacto" },
+    { href: "/#productos", label: "Catálogo" },
+    { href: "/#modalidades", label: "Venta & Alquiler" },
+    { href: "/#soluciones", label: "Soluciones" },
+    { href: "/#soporte", label: "Servicio Técnico" },
+    { href: "/#nosotros", label: "Nosotros" },
+    { href: "/#contacto", label: "Contacto" },
   ];
 
   const whatsappHref = whatsappLink(copy.contact.defaultMessage);
@@ -52,12 +52,12 @@ export const Nav: React.FC = () => {
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           scrolled
-            ? "bg-[var(--color-carbon)]/90 backdrop-blur-md border-b border-[var(--color-grafito-2)] shadow-lg shadow-black/20 py-3"
-            : "bg-transparent py-5"
+            ? "bg-[#0b0c0e]/95 backdrop-blur-md border-b border-[#25282f] shadow-2xl shadow-black/60 py-3.5"
+            : "bg-gradient-to-b from-black/80 to-transparent py-5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
-          {/* Logo oficial */}
+          {/* Logo oficial de Maqsyma */}
           <Link
             href="/"
             className="focus:outline-none focus:ring-2 focus:ring-[var(--color-oro)] rounded"
@@ -67,62 +67,69 @@ export const Nav: React.FC = () => {
           </Link>
 
           {/* Menú de navegación desktop */}
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+          <nav className="hidden md:flex items-center gap-7 text-sm font-medium">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
-                className="text-[var(--color-gris)] hover:text-[var(--color-plata)] transition-colors duration-150 focus:outline-none focus:ring-1 focus:ring-[var(--color-oro)] rounded px-1"
+                className="text-neutral-300 hover:text-[var(--color-oro)] transition-colors duration-200 focus:outline-none focus:ring-1 focus:ring-[var(--color-oro)] rounded px-1"
               >
                 {link.label}
               </a>
             ))}
           </nav>
 
-          {/* Botón WhatsApp a la derecha */}
-          <div className="hidden md:flex items-center gap-4">
+          {/* CTA WhatsApp & Acceso Admin */}
+          <div className="hidden sm:flex items-center gap-3">
+            <Link
+              href="/admin/login"
+              className="text-xs font-mono text-neutral-400 hover:text-white px-2.5 py-1.5 rounded border border-white/5 hover:border-white/20 transition-all"
+            >
+              Portal Admin
+            </Link>
+
             <a
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-md bg-[var(--color-oro)] px-4 py-2 text-xs font-bold text-[var(--color-carbon)] transition-all duration-200 hover:bg-[var(--color-oro-claro)] hover:shadow-[0_0_15px_rgba(201,162,74,0.3)] active:scale-95"
+              className="inline-flex items-center gap-2 rounded-md bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[var(--color-carbon)] transition-all duration-200 hover:brightness-110 active:scale-95 shadow-md shadow-[var(--color-oro)]/10"
             >
-              <span>Cotizar por WhatsApp</span>
+              <span>Cotizar</span>
               <span>→</span>
             </a>
           </div>
 
           {/* Botón hamburguesa móvil */}
-          <div className="flex md:hidden items-center">
+          <div className="md:hidden flex items-center gap-2">
             <button
-              type="button"
-              onClick={() => setMobileMenuOpen(true)}
-              aria-label="Abrir menú de navegación"
-              className="p-2 rounded-md bg-[var(--color-grafito)] border border-[var(--color-grafito-2)] text-[var(--color-plata)] focus:outline-none focus:ring-2 focus:ring-[var(--color-oro)]"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="p-2 text-neutral-300 hover:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-oro)] rounded"
+              aria-label={mobileMenuOpen ? "Cerrar menú" : "Abrir menú principal"}
+              aria-expanded={mobileMenuOpen}
             >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
+              {mobileMenuOpen ? (
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              )}
             </button>
           </div>
         </div>
       </header>
 
-      {/* Menú móvil a pantalla completa */}
+      {/* Menú Móvil Fullscreen / Drawer */}
       {mobileMenuOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Menú principal de navegación"
-          className="fixed inset-0 z-50 bg-[var(--color-carbon)]/98 backdrop-blur-xl flex flex-col justify-between p-6 animate-in fade-in duration-200"
-        >
-          <div className="flex items-center justify-between">
+        <div className="fixed inset-0 z-50 bg-[#07080a]/98 backdrop-blur-xl flex flex-col justify-between p-6 md:hidden animate-fadeIn">
+          <div className="flex items-center justify-between border-b border-[#25282f] pb-4">
             <Logo showText />
             <button
-              type="button"
               onClick={() => setMobileMenuOpen(false)}
-              aria-label="Cerrar menú de navegación"
-              className="p-2 rounded-md bg-[var(--color-grafito)] border border-[var(--color-grafito-2)] text-[var(--color-plata)] focus:outline-none focus:ring-2 focus:ring-[var(--color-oro)]"
+              className="p-2 text-neutral-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-[var(--color-oro)] rounded"
+              aria-label="Cerrar menú"
             >
               <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -130,32 +137,38 @@ export const Nav: React.FC = () => {
             </button>
           </div>
 
-          <nav className="flex flex-col gap-6 text-xl font-bold font-['Montserrat',sans-serif]">
+          <div className="flex flex-col gap-5 my-auto">
             {navLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-[var(--color-plata)] hover:text-[var(--color-oro)] transition-colors py-1"
+                className="font-['Syne',sans-serif] text-2xl font-bold text-neutral-200 hover:text-[var(--color-oro)] transition-colors"
               >
                 {link.label}
               </a>
             ))}
-          </nav>
+          </div>
 
-          <div className="pt-6 border-t border-[var(--color-grafito-2)] space-y-4">
+          <div className="space-y-3 pt-6 border-t border-[#25282f]">
             <a
               href={whatsappHref}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2 rounded-md bg-[var(--color-oro)] px-5 py-3 text-sm font-bold text-[var(--color-carbon)] shadow-lg active:scale-95"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full py-3.5 rounded-md bg-gradient-to-r from-[var(--color-oro-claro)] via-[var(--color-oro)] to-[var(--color-oro-oscuro)] text-center font-bold text-sm uppercase tracking-wider text-[var(--color-carbon)] block"
             >
-              <span>Cotizar por WhatsApp</span>
-              <span>→</span>
+              Contactar por WhatsApp
             </a>
-            <p className="text-center text-xs text-[var(--color-gris)]">
-              Maquinaria, Sistemas y Materiales Avanzados · Arequipa
-            </p>
+            <div className="text-center">
+              <Link
+                href="/admin/login"
+                onClick={() => setMobileMenuOpen(false)}
+                className="text-xs font-mono text-neutral-500 hover:text-neutral-300"
+              >
+                Acceso Administrador →
+              </Link>
+            </div>
           </div>
         </div>
       )}

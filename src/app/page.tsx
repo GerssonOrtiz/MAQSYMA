@@ -1,42 +1,58 @@
 import React from "react";
 import { Nav } from "@/components/nav/Nav";
 import { Hero } from "@/components/hero/Hero";
+import { AccesoCategorias } from "@/components/catalogo/AccesoCategorias";
+import { CatalogoExplorer } from "@/components/catalogo/CatalogoExplorer";
+import { ModalidadesVentaAlquiler } from "@/components/secciones/ModalidadesVentaAlquiler";
+import { SolucionesAplicacion } from "@/components/secciones/SolucionesAplicacion";
+import { SoporteTecnico } from "@/components/secciones/SoporteTecnico";
 import { WorkshopExperience } from "@/components/scenes/WorkshopExperience";
-import { PresentacionEquipos } from "@/components/presentacion/PresentacionEquipos";
 import { Contacto } from "@/components/contact/Contacto";
 import { Footer } from "@/components/footer/Footer";
 import { FloatingWhatsApp } from "@/components/floating/FloatingWhatsApp";
 import { IntroScreen } from "@/components/intro/IntroScreen";
+import { catalogoProductos } from "@/data/catalogoOficial";
 
 export default function HomePage() {
   return (
     <div className="relative min-h-screen bg-[var(--color-carbon)] text-[var(--color-plata)] flex flex-col justify-between selection:bg-[var(--color-oro)] selection:text-[var(--color-carbon)]">
-
-      {/* Pantalla de inicio con logo — solo se muestra en la primera carga de sesión */}
+      {/* Pantalla de bienvenida con logo al abrir sesión */}
       <IntroScreen />
 
-      {/* Barra de Navegación fija con blur y responsive */}
+      {/* Barra de navegación superior fija */}
       <Nav />
 
-      {/* Contenido principal */}
+      {/* Contenido principal de MAQSYMA 2.0 */}
       <main className="flex-1 w-full">
-        {/* Hero principal con llamada a WhatsApp y recorrido */}
+        {/* 1. Hero industrial cinematográfico */}
         <Hero />
 
-        {/* Recorrido por el taller técnico ESAB (Escenas con scroll suave) */}
+        {/* 2. Acceso directo a líneas de producto */}
+        <AccesoCategorias />
+
+        {/* 3. Catálogo interactivo con filtros reales y búsqueda */}
+        <CatalogoExplorer productos={catalogoProductos} />
+
+        {/* 4. Modalidades de negocio: Venta y Alquiler */}
+        <ModalidadesVentaAlquiler />
+
+        {/* 5. Soluciones aplicadas por sector industrial */}
+        <SolucionesAplicacion />
+
+        {/* 6. Soporte técnico y asesoría */}
+        <SoporteTecnico />
+
+        {/* 7. Recorrido visual del taller industrial */}
         <WorkshopExperience />
 
-        {/* Tres secciones de equipos: Más Vendidos, Mejor Valorados y Nuevos */}
-        <PresentacionEquipos />
-
-        {/* Llamada a contacto final */}
+        {/* 8. Contacto directo y canal de atención */}
         <Contacto />
       </main>
 
-      {/* Pie de página institucional */}
+      {/* Footer comercial */}
       <Footer />
 
-      {/* Botón flotante accesible de WhatsApp */}
+      {/* Botón flotante oficial de WhatsApp */}
       <FloatingWhatsApp />
     </div>
   );

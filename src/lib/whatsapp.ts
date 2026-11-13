@@ -3,30 +3,28 @@ import { copy } from "@/content/copy.es";
 const number = copy.contact.whatsappNumber;
 
 /**
- * Generador oficial de links de WhatsApp para Maqsyma (03-secciones-y-componentes)
+ * Generador oficial de links de WhatsApp para Maqsyma 2.0
  */
 export function whatsappLink(message: string): string {
   return `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 }
 
 /**
- * Mensaje parametrizado para cotizar un equipo según directiva oficial
+ * Enlace parametrizado para cotización de producto con mensaje profesional
  */
 export function whatsappProductLink(
   nombre: string,
-  modelo: string,
+  modelo?: string,
   esAlquiler?: boolean,
   unidad?: string
 ): string {
   if (esAlquiler) {
     return whatsappLink(
-      `Hola, quisiera cotizar el equipo ${nombre} (${modelo}) de ESAB. ¿Me puede indicar precio de alquiler y disponibilidad por ${
-        unidad || "mes"
-      }?`
+      copy.contact.rentalQuoteMessage(nombre + (modelo ? ` (${modelo})` : ""), unidad || "mes")
     );
   }
 
   return whatsappLink(
-    `Hola, quisiera cotizar el equipo ${nombre} (${modelo}) de ESAB. ¿Me puede indicar precio y disponibilidad?`
+    copy.contact.productQuoteMessage(nombre, modelo)
   );
 }

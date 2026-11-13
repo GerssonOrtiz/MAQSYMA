@@ -46,7 +46,7 @@ export const TarjetaEquipo: React.FC<TarjetaEquipoProps> = ({ equipo, etiqueta }
             className="object-contain p-4 transition-transform duration-250 ease-out group-hover:scale-[1.03]"
           />
         ) : (
-          <EquipoImagePlaceholder familia={equipo.familia} nombre={equipo.nombre} />
+          <EquipoImagePlaceholder familia={equipo.familia || equipo.proceso || "General"} nombre={equipo.nombre} />
         )}
 
         {/* 2. Etiqueta única de estado en dorado (esquina superior) */}

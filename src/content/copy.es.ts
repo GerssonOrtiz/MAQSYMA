@@ -1,6 +1,6 @@
 /**
- * Centralización de textos (Copy oficial de Maqsyma)
- * Requisito: Todo el copy debe poder cambiarse desde un solo archivo (01-concepto-y-marca.md).
+ * Centralización de textos (Copy oficial de Maqsyma 2.0)
+ * Sincronizado con la identidad comercial de Arequipa y catálogo ampliado.
  */
 
 export const copy = {
@@ -8,62 +8,90 @@ export const copy = {
     name: "MAQSYMA",
     legalName: "Maquinaria, Sistemas y Materiales Avanzados",
     location: "Arequipa, Perú",
-    tagline: "Venta y alquiler de equipos de soldadura ESAB",
+    address: "Av. Venezuela 866, Arequipa, Perú",
+    tagline: "Equipos y soluciones industriales de soldadura y corte",
   },
   contact: {
-    // Número de WhatsApp oficial (configurar vía variable de entorno NEXT_PUBLIC_WHATSAPP_NUMBER)
-    whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "51999999999",
-    defaultMessage: "Hola Maqsyma, deseo cotizar equipos de soldadura ESAB para venta/alquiler.",
+    // Número oficial verificado: 907 438 497 (prefijo Perú 51)
+    whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "51907438497",
+    phoneDisplay: "+51 907 438 497",
+    addressDisplay: "Av. Venezuela 866 - Arequipa",
+    defaultMessage: "Hola Maqsyma, deseo información sobre venta y alquiler de equipos de soldadura y corte.",
     productQuoteMessage: (productName: string, sku?: string) =>
-      `Hola Maqsyma, deseo cotizar el equipo ESAB ${productName}${sku ? ` (Ref: ${sku})` : ""}.`,
+      `Hola Maqsyma, deseo cotizar el producto ${productName}${sku ? ` (${sku})` : ""}. ¿Tienen disponibilidad y asesoría técnica?`,
+    rentalQuoteMessage: (productName: string, unidad: string = "mes") =>
+      `Hola Maqsyma, deseo cotizar el alquiler del equipo ${productName} por ${unidad}. ¿Cuáles son los requisitos y disponibilidad en Arequipa?`,
   },
   hero: {
-    title: "Equipos de soldadura ESAB para venta y alquiler",
-    subtitle: "Maquinaria, sistemas y materiales avanzados para su taller, en Arequipa.",
-    primaryCta: "Cotizar por WhatsApp",
-    secondaryCta: "Explorar el taller",
+    badge: "Soluciones Industriales en Arequipa",
+    titlePrimary: "POTENCIA",
+    titleHighlight: "INDUSTRIAL.",
+    subtitle: "Equipos de soldadura y corte de alta gama para minería, calderería y montaje estructural. Venta, alquiler y asesoría técnica en Arequipa.",
+    primaryCta: "Explorar catálogo",
+    secondaryCta: "Cotizar por WhatsApp",
   },
-  scenes: {
-    sectionHeading: "Recorrido del taller",
-    sectionSubheading: "Conozca los procesos técnicos y la potencia industrial de nuestros equipos.",
-    items: [
-      {
-        id: "entrada",
-        title: "Recepción Técnica",
-        subtitle: "Bienvenido a Maqsyma.",
-        process: "Recepción",
-      },
-      {
-        id: "mig-mag",
-        title: "Área MIG/MAG",
-        subtitle: "Soldadura de alta productividad para producción continua.",
-        process: "MIG/MAG (GMAW/FCAW)",
-      },
-      {
-        id: "tig",
-        title: "Área TIG",
-        subtitle: "Precisión para acero inoxidable, aluminio y trabajos finos.",
-        process: "TIG (GTAW Alta Frecuencia)",
-      },
-      {
-        id: "mma",
-        title: "Área MMA",
-        subtitle: "Robustez para campo, mantenimiento y trabajos a la intemperie.",
-        process: "Electrodo Revestido (SMAW)",
-      },
-      {
-        id: "plasma",
-        title: "Área Plasma",
-        subtitle: "Corte limpio para planchas metálicas.",
-        process: "Corte por Plasma",
-      },
-      {
-        id: "alquiler",
-        title: "Flota de Alquiler",
-        subtitle: "Equipos listos para su obra, por día, semana o mes.",
-        process: "Alquiler Operativo",
-      },
+  categorias: [
+    {
+      id: "maquinas-soldar",
+      titulo: "Máquinas de Soldar",
+      descripcion: "MIG/MAG, TIG Alta Frecuencia, Electrodo (SMAW) y Multiprocesos.",
+      icono: "Wrench",
+    },
+    {
+      id: "corte-plasma",
+      titulo: "Equipos de Corte y Plasma",
+      descripcion: "Sistemas de corte de alta definición y precisión para planchas metálicas.",
+      icono: "Flame",
+    },
+    {
+      id: "caretas-epp",
+      titulo: "Caretas y Protección EPP",
+      descripcion: "Línea Sentinel, filtros fotosensibles de alta claridad óptica y sistemas PAPR.",
+      icono: "Shield",
+    },
+    {
+      id: "alquiler",
+      titulo: "Flota de Alquiler",
+      descripcion: "Disponibilidad inmediata para frentes de obra y proyectos de parada de planta.",
+      icono: "Truck",
+    },
+  ],
+  soluciones: [
+    {
+      titulo: "Minería y Paradas de Planta",
+      descripcion: "Equipos heavy duty multiproceso (500A+) para trabajo severo y ranurado por arco-aire.",
+    },
+    {
+      titulo: "Estructuras Metálicas y Calderería",
+      descripcion: "Sistemas MIG/MAG y alambre tubular para alta tasa de deposición y juntas de penetración completa.",
+    },
+    {
+      titulo: "Tuberías y Aceros Inoxidables",
+      descripcion: "Fuentes TIG con arco pulsado de alta frecuencia para tolerancias sanitarias y de presión.",
+    },
+    {
+      titulo: "Mantenimiento y Montaje en Campo",
+      descripcion: "Inversores portátiles multivoltaje con tolerancia a fluctuaciones y generadores.",
+    },
+  ],
+  servicioTecnico: {
+    titulo: "Soporte Técnico y Asesoría Especializada",
+    descripcion: "Acompañamos a su equipo técnico en la selección del proceso óptimo, parámetros de soldadura y configuración en obra.",
+    puntos: [
+      "Diagnóstico y calibración de parámetros para soldadores",
+      "Demostraciones técnicas y asesoría en campo",
+      "Equipos de respaldo para continuidad operativa en proyectos críticos",
     ],
+  },
+  modalidades: {
+    venta: {
+      titulo: "Venta Directa de Equipos",
+      descripcion: "Adquiera maquinaria de alto rendimiento con garantía de fábrica, repuestos originales y soporte local.",
+    },
+    alquiler: {
+      titulo: "Flota de Alquiler Operativo",
+      descripcion: "Tarifas por día, semana o mes adaptadas a la duración de su obra sin inmovilizar capital de inversión.",
+    },
   },
   sections: {
     bestSellers: {
@@ -80,9 +108,9 @@ export const copy = {
     },
   },
   footer: {
-    ctaHeading: "¿Necesita un equipo?",
-    ctaBody: "Escríbanos por WhatsApp y le respondemos con precio y disponibilidad inmediata.",
-    quoteButton: "Contactar a un Asesor",
-    rights: "Todos los derechos reservados. Distribución autorizada de equipos ESAB.",
+    ctaHeading: "¿Listo para equipar su próximo proyecto industrial?",
+    ctaBody: "Consulte stock disponible en nuestro local de Arequipa o coordine despacho directo a su frente de trabajo.",
+    quoteButton: "Contactar a un Asesor Técnico",
+    rights: "Todos los derechos reservados. Maquinaria, Sistemas y Materiales Avanzados.",
   },
-} as const;
+};
