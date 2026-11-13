@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Producto } from "@/types/equipo";
 import { whatsappProductLink } from "@/lib/whatsapp";
 
@@ -8,10 +9,13 @@ interface ProductosDestacadosProps {
 }
 
 export const ProductosDestacados: React.FC<ProductosDestacadosProps> = ({ productos }) => {
-  // Tomamos los modelos insignia reales de ESAB
-  const heroProduct = productos.find((p) => p.slug === "warrior-500i") || productos[0];
+  // Tomamos los modelos insignia reales de ESAB con imagen
+  const heroProduct = productos.find((p) => p.slug === "aristo-500ix") ||
+                      productos.find((p) => p.slug === "fabricator-em-500i") ||
+                      productos[0];
+
   const secondaryProducts = productos
-    .filter((p) => p.id !== heroProduct?.id)
+    .filter((p) => p.id !== heroProduct?.id && p.imagenUrl)
     .slice(0, 3);
 
   const heroQuoteHref = heroProduct
@@ -115,29 +119,35 @@ export const ProductosDestacados: React.FC<ProductosDestacadosProps> = ({ produc
                 </div>
               </div>
 
-              {/* Columna Visual / Módulo Técnico */}
+              {/* Columna Visual con Fotografía Oficial del Equipo */}
               <div className="lg:col-span-5 flex flex-col justify-center items-center">
-                <div className="w-full aspect-square max-w-sm rounded-xl bg-[#0c0d13] border border-[#252838] p-8 flex flex-col justify-between relative group">
-                  <div className="flex justify-between items-center text-xs font-mono text-neutral-400">
-                    <span className="text-[var(--color-oro)]">ESAB HEAVY DUTY</span>
+                <div className="w-full aspect-square max-w-md rounded-2xl bg-[#0c0d13] border border-[#252838] p-8 flex flex-col justify-between relative group overflow-hidden shadow-2xl">
+                  <div className="flex justify-between items-center text-xs font-mono text-neutral-400 z-10">
+                    <span className="text-[var(--color-oro)] font-bold">ESAB HEAVY DUTY</span>
                     <span>500A @ 60%</span>
                   </div>
 
-                  <div className="text-center py-10 space-y-3">
-                    <div className="w-16 h-16 mx-auto rounded-full bg-[var(--color-oro)]/10 border border-[var(--color-oro)]/30 flex items-center justify-center text-[var(--color-oro)] font-mono font-bold text-xl">
-                      ⚡
-                    </div>
-                    <div className="font-['Syne',sans-serif] text-xl font-bold text-white">
-                      {heroProduct.modelo}
-                    </div>
-                    <p className="text-xs text-neutral-400 font-mono">
-                      GMAW / FCAW / SMAW / GTAW / CAG
-                    </p>
+                  <div className="relative flex-1 w-full my-4 flex items-center justify-center">
+                    {heroProduct.imagenUrl ? (
+                      <div className="relative w-full h-full max-h-[260px]">
+                        <Image
+                          src={heroProduct.imagenUrl}
+                          alt={heroProduct.nombre}
+                          fill
+                          className="object-contain filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.9)] transition-transform duration-500 group-hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, 400px"
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-16 h-16 mx-auto rounded-full bg-[var(--color-oro)]/10 border border-[var(--color-oro)]/30 flex items-center justify-center text-[var(--color-oro)] font-mono font-bold text-xl">
+                        ⚡
+                      </div>
+                    )}
                   </div>
 
-                  <div className="pt-4 border-t border-white/10 flex justify-between text-[11px] font-mono text-neutral-400">
-                    <span>Proceso</span>
-                    <span className="text-white">Multiproceso Industrial</span>
+                  <div className="pt-4 border-t border-white/10 flex justify-between text-[11px] font-mono text-neutral-400 z-10">
+                    <span>Modelo</span>
+                    <span className="text-white font-semibold">{heroProduct.modelo}</span>
                   </div>
                 </div>
               </div>
@@ -145,48 +155,44 @@ export const ProductosDestacados: React.FC<ProductosDestacadosProps> = ({ produc
           </div>
         )}
 
-        {/* Productos Secundarios en Composición Asimétrica */}
+        {/* Productos Secundarios con Imagen Oficial */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {secondaryProducts.map((prod) => {
             const quoteLink = whatsappProductLink(prod.nombre, prod.modelo);
             return (
               <div
                 key={prod.id}
-                className="rounded-xl bg-[#10121a] border border-[#1e2230] hover:border-[var(--color-oro)]/40 p-6 flex flex-col justify-between transition-all duration-300 group"
+                className="rounded-xl bg-[#10121a] border border-[#1e2230] hover:border-[var(--color-oro)]/40 p-6 flex flex-col justify-between transition-all duration-300 group shadow-lg"
               >
                 <div>
-                  <div className="flex justify-between items-center mb-4 text-xs font-mono text-neutral-400">
+                  <div className="flex justify-between items-center mb-3 text-xs font-mono text-neutral-400">
                     <span className="text-[var(--color-oro)] font-semibold">{prod.marca}</span>
-                    <span>{prod.proceso}</span>
+                    <span className="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px]">{prod.proceso}</span>
                   </div>
+
+                  {/* Fotografía de producto */}
+                  {prod.imagenUrl && (
+                    <div className="relative w-full h-44 my-3 rounded-lg bg-[#0a0b10] border border-white/5 flex items-center justify-center p-3 overflow-hidden">
+                      <Image
+                        src={prod.imagenUrl}
+                        alt={prod.nombre}
+                        fill
+                        className="object-contain p-2 filter drop-shadow-[0_6px_12px_rgba(0,0,0,0.8)] group-hover:scale-105 transition-transform duration-300"
+                        sizes="(max-width: 768px) 100vw, 300px"
+                      />
+                    </div>
+                  )}
 
                   <h4 className="font-['Syne',sans-serif] text-xl font-bold text-white mb-2 group-hover:text-[var(--color-oro-claro)] transition-colors">
                     {prod.nombre}
                   </h4>
 
-                  <p className="text-xs text-neutral-400 leading-relaxed line-clamp-3 mb-6 font-light">
+                  <p className="text-xs text-neutral-400 leading-relaxed line-clamp-2 mb-4 font-light">
                     {prod.descripcionCorta}
                   </p>
-
-                  {prod.especificaciones && (
-                    <div className="space-y-1.5 py-3 border-y border-white/5 text-[11px] font-mono text-neutral-400 mb-6">
-                      {prod.especificaciones.amperajeMax && (
-                        <div className="flex justify-between">
-                          <span>Potencia:</span>
-                          <span className="text-neutral-200">{prod.especificaciones.amperajeMax}</span>
-                        </div>
-                      )}
-                      {prod.especificaciones.voltajeEntrada && (
-                        <div className="flex justify-between">
-                          <span>Entrada:</span>
-                          <span className="text-neutral-200">{prod.especificaciones.voltajeEntrada}</span>
-                        </div>
-                      )}
-                    </div>
-                  )}
                 </div>
 
-                <div className="pt-2 flex items-center justify-between gap-2">
+                <div className="pt-3 border-t border-white/5 flex items-center justify-between gap-2">
                   <Link
                     href={`/equipos/${prod.slug}`}
                     className="text-xs font-mono text-neutral-400 hover:text-white transition-colors"
@@ -198,7 +204,7 @@ export const ProductosDestacados: React.FC<ProductosDestacadosProps> = ({ produc
                     href={quoteLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-3 py-1.5 rounded bg-[var(--color-oro)]/10 hover:bg-[var(--color-oro)]/20 text-[var(--color-oro)] border border-[var(--color-oro)]/30 text-[11px] font-mono uppercase font-bold transition-colors"
+                    className="px-3.5 py-1.5 rounded bg-[var(--color-oro)]/10 hover:bg-[var(--color-oro)] text-[var(--color-oro)] hover:text-[var(--color-carbon)] border border-[var(--color-oro)]/30 text-[11px] font-mono uppercase font-bold transition-all"
                   >
                     Consultar
                   </a>

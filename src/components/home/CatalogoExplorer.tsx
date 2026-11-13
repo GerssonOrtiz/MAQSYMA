@@ -2,6 +2,7 @@
 
 import React, { useState, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Producto } from "@/types/equipo";
 import { whatsappProductLink } from "@/lib/whatsapp";
 
@@ -18,6 +19,7 @@ export const CatalogoExplorer: React.FC<CatalogoExplorerProps> = ({ productos })
   const categorias = [
     { id: "todas", label: "TODO EL CATÁLOGO" },
     { id: "maquinas-soldar", label: "MÁQUINAS DE SOLDAR" },
+    { id: "antorchas-accesorios", label: "ALIMENTADORES Y ACCESORIOS" },
     { id: "corte-plasma", label: "CORTE Y PLASMA" },
     { id: "caretas-epp", label: "CARETAS Y EPP" },
   ];
@@ -62,10 +64,10 @@ export const CatalogoExplorer: React.FC<CatalogoExplorerProps> = ({ productos })
               04 // SISTEMA DE EXPLORACIÓN TÉCNICA
             </span>
             <h2 className="font-['Syne',sans-serif] text-3xl sm:text-5xl font-black text-white tracking-tight">
-              CATÁLOGO INDUSTRIAL
+              CATÁLOGO INDUSTRIAL EN VENTA
             </h2>
             <p className="text-neutral-400 text-sm mt-2 max-w-xl font-light">
-              Equipos con trazabilidad técnica real. Sin datos demo ni especificaciones ficticias.
+              Equipos con fotografía real, especificaciones técnicas de fábrica y disponibilidad inmediata en Arequipa.
             </p>
           </div>
 
@@ -76,7 +78,7 @@ export const CatalogoExplorer: React.FC<CatalogoExplorerProps> = ({ productos })
               <input
                 id="search-input"
                 type="text"
-                placeholder="Buscar modelo (ej. Warrior, Sentinel)..."
+                placeholder="Buscar modelo (ej. Rebel, Warrior, Rogue)..."
                 value={busqueda}
                 onChange={(e) => setBusqueda(e.target.value)}
                 className="w-full px-4 py-3 pl-10 rounded bg-[#11131a] border border-[#222634] text-xs font-mono text-white placeholder-neutral-500 focus:outline-none focus:border-[var(--color-oro)] focus:ring-1 focus:ring-[var(--color-oro)] transition-all"
@@ -147,11 +149,11 @@ export const CatalogoExplorer: React.FC<CatalogoExplorerProps> = ({ productos })
 
         {/* Contador de resultados */}
         <div className="mb-6 flex justify-between items-center text-xs font-mono text-neutral-400">
-          <span>Mostrando {productosFiltrados.length} equipos disponibles</span>
+          <span>Mostrando {productosFiltrados.length} equipos con disponibilidad</span>
           <span>Soporte oficial ESAB</span>
         </div>
 
-        {/* Grid de Productos con Diseño Editorial Industrial */}
+        {/* Grid de Productos con Fotografía Oficial Integrada */}
         {productosFiltrados.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {productosFiltrados.map((equipo) => {
@@ -163,7 +165,7 @@ export const CatalogoExplorer: React.FC<CatalogoExplorerProps> = ({ productos })
                 >
                   <div>
                     {/* Header de la tarjeta */}
-                    <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-mono font-bold text-[var(--color-oro)] tracking-wider">
                         {equipo.marca}
                       </span>
@@ -179,6 +181,24 @@ export const CatalogoExplorer: React.FC<CatalogoExplorerProps> = ({ productos })
                       </div>
                     </div>
 
+                    {/* Contenedor de Fotografía Real del Equipo */}
+                    <div className="relative w-full h-48 my-3 rounded-lg bg-[#0a0c10] border border-white/5 flex items-center justify-center p-3 overflow-hidden group-hover:border-[var(--color-oro)]/30 transition-colors">
+                      {equipo.imagenUrl ? (
+                        <Image
+                          src={equipo.imagenUrl}
+                          alt={equipo.nombre}
+                          fill
+                          className="object-contain p-2 filter drop-shadow-[0_8px_16px_rgba(0,0,0,0.85)] group-hover:scale-105 transition-transform duration-300"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      ) : (
+                        <div className="flex flex-col items-center justify-center text-neutral-400 text-xs font-mono">
+                          <span className="text-2xl mb-1">⚡</span>
+                          <span>Ficha Técnica Oficial</span>
+                        </div>
+                      )}
+                    </div>
+
                     {/* Titular */}
                     <Link href={`/equipos/${equipo.slug}`}>
                       <h3 className="font-['Syne',sans-serif] text-xl font-bold text-white group-hover:text-[var(--color-oro-claro)] transition-colors mb-2">
@@ -187,7 +207,7 @@ export const CatalogoExplorer: React.FC<CatalogoExplorerProps> = ({ productos })
                     </Link>
 
                     {/* Descripción corta */}
-                    <p className="text-xs text-neutral-400 font-light leading-relaxed line-clamp-3 mb-6">
+                    <p className="text-xs text-neutral-400 font-light leading-relaxed line-clamp-2 mb-4">
                       {equipo.descripcionCorta}
                     </p>
 
